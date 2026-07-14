@@ -5914,3 +5914,1985 @@ end
 -- KÍCH HOẠT LẠI TẤT CẢ VÒNG LẶP
 -- =============================================
 _0xmhor()
+-- =============================================
+-- APPEL CAT HUB - COMPLETING MISSING FEATURES
+-- =============================================
+
+-- Thêm flag cho tất cả material còn thiếu
+local materialFlags = {
+    ["\x41\x75\x74\x6f\x43\x61\x6e\x64\x79"] = "\x43\x61\x6e\x64\x79",
+    ["\x41\x75\x74\x6f\x53\x63\x72\x61\x70\x4d\x65\x74\x61\x6c"] = "\x53\x63\x72\x61\x70",
+    ["\x41\x75\x74\x6f\x4c\x65\x61\x74\x68\x65\x72"] = "\x4c\x65\x61\x74\x68\x65\x72",
+    ["\x41\x75\x74\x6f\x41\x6e\x67\x65\x6c\x57\x69\x6e\x67\x73"] = "\x41\x6e\x67\x65\x6c",
+    ["\x41\x75\x74\x6f\x46\x69\x73\x68\x54\x61\x69\x6c"] = "\x46\x69\x73\x68",
+    ["\x41\x75\x74\x6f\x47\x75\x6e\x70\x6f\x77\x64\x65\x72"] = "\x47\x75\x6e\x70\x6f\x77\x64\x65\x72",
+    ["\x41\x75\x74\x6f\x4d\x79\x73\x74\x69\x63\x44\x72\x6f\x70\x6c\x65\x74"] = "\x4d\x79\x73\x74\x69\x63",
+    ["\x41\x75\x74\x6f\x43\x6f\x6e\x6a\x75\x72\x65\x64\x43\x6f\x63\x6f\x61"] = "\x43\x6f\x6e\x6a\x75\x72\x65\x64",
+    ["\x41\x75\x74\x6f\x44\x72\x61\x67\x6f\x6e\x53\x63\x61\x6c\x65\x73"] = "\x44\x72\x61\x67\x6f\x6e",
+    ["\x41\x75\x74\x6f\x52\x61\x64\x69\x6f\x61\x63\x74\x69\x76\x65"] = "\x52\x61\x64\x69\x6f\x61\x63\x74\x69\x76\x65",
+    ["\x41\x75\x74\x6f\x44\x65\x6d\x6f\x6e\x69\x63\x57\x69\x73\x70"] = "\x44\x65\x6d\x6f\x6e\x69\x63",
+    ["\x41\x75\x74\x6f\x4d\x69\x6e\x69\x54\x75\x73\x6b"] = "\x4d\x69\x6e\x69",
+    ["\x41\x75\x74\x6f\x56\x61\x6d\x70\x69\x72\x65\x46\x61\x6e\x67"] = "\x56\x61\x6d\x70\x69\x72\x65",
+    ["\x41\x75\x74\x6f\x4d\x61\x67\x6d\x61\x4f\x72\x65"] = "\x4d\x61\x67\x6d\x61",
+    ["\x41\x75\x74\x6f\x45\x63\x74\x6f\x70\x6c\x61\x73\x6d"] = "\x45\x63\x74\x6f\x70\x6c\x61\x73\x6d",
+    ["\x41\x75\x74\x6f\x44\x61\x72\x6b\x46\x72\x61\x67\x6d\x65\x6e\x74"] = "\x44\x61\x72\x6b",
+    ["\x41\x75\x74\x6f\x46\x69\x73\x74\x4f\x66\x44\x61\x72\x6b\x6e\x65\x73\x73"] = "\x46\x69\x73\x74",
+}
+for flag, matName in pairs(materialFlags) do
+    _0xsuzc[flag] = false
+    _0x_fhmp(flag, function()
+        if not _0xsuzc[flag] then return end
+        for _, v in pairs(_0xd3eb:GetDescendants()) do
+            if v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") and v.Name:find(matName) then
+                if (v.Position - _0xachk.Position).Magnitude < 200 then
+                    _0xlnsv(v.Position) task.wait(0.2)
+                    _0xqsxa(v, 0) _0xqsxa(v, 1) break
+                end
+            end
+        end
+    end)
+end
+
+-- =============================================
+-- AUTO PLAYER HUNTER & AUTO INSTINCT EXP
+-- =============================================
+_0xsuzc["\x41\x75\x74\x6f\x50\x6c\x61\x79\x65\x72\x48\x75\x6e\x74\x65\x72"] = false
+_0xsuzc["\x41\x75\x74\x6f\x49\x6e\x73\x74\x69\x6e\x63\x74\x45\x58\x50"] = false
+_0x_fhmp("\x41\x50\x48", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x50\x6c\x61\x79\x65\x72\x48\x75\x6e\x74\x65\x72"] then return end
+    for _, p in pairs(_0x5b3c:GetPlayers()) do
+        if p ~= _0xd9eh and p.Character and p.Character:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and p.Character.Humanoid.Health > 0 then
+            local hrp = p.Character:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74")
+            if hrp and (hrp.Position - _0xachk.Position).Magnitude < 500 then
+                _0xlnsv(hrp.Position + Vector3.new(0, 10, 0)) _0xoqvy() break
+            end
+        end
+    end
+end)
+_0x_fhmp("\x41\x49\x45", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x49\x6e\x73\x74\x69\x6e\x63\x74\x45\x58\x50"] then return end
+    pcall(function() _0xc2da.Remotes.Communication:InvokeServer("\x41\x63\x74\x69\x76\x61\x74\x65\x49\x6e\x73\x74\x69\x6e\x63\x74") end)
+end)
+
+-- =============================================
+-- AUTO ALL BOSS + SPECIFIC BOSSES
+-- =============================================
+_0xsuzc["\x41\x75\x74\x6f\x41\x6c\x6c\x42\x6f\x73\x73"] = false
+_0x_fhmp("\x41\x41\x42", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x41\x6c\x6c\x42\x6f\x73\x73"] then return end
+    local allBosses = {"\x44\x69\x61\x6d\x6f\x6e\x64","\x4a\x65\x72\x65\x6d\x79","\x46\x61\x6a\x69\x74\x61","\x44\x6f\x6e\x20\x53\x77\x61\x6e","\x53\x6d\x6f\x6b\x65\x20\x41\x64\x6d\x69\x72\x61\x6c","\x57\x61\x72\x64\x65\x6e","\x43\x68\x69\x65\x66\x20\x57\x61\x72\x64\x65\x6e","\x4d\x61\x67\x6d\x61\x20\x41\x64\x6d\x69\x72\x61\x6c","\x46\x69\x73\x68\x6d\x61\x6e\x20\x4c\x6f\x72\x64","\x57\x79\x73\x70\x65\x72","\x54\x68\x75\x6e\x64\x65\x72\x20\x47\x6f\x64","\x54\x69\x64\x65\x20\x4b\x65\x65\x70\x65\x72","\x43\x75\x72\x73\x65\x64\x20\x43\x61\x70\x74\x61\x69\x6e","\x44\x61\x72\x6b\x62\x65\x61\x72\x64","\x4f\x72\x64\x65\x72","\x42\x65\x61\x75\x74\x69\x66\x75\x6c\x20\x50\x69\x72\x61\x74\x65","\x4c\x6f\x6e\x67\x6d\x61"}
+    for _, name in ipairs(allBosses) do
+        local boss = _0xjlqt("\x4d\x6f\x64\x65\x6c", name)
+        if boss and boss:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and boss.Humanoid.Health > 0 then
+            _0xlnsv(boss.HumanoidRootPart.Position + Vector3.new(0, 15, 0)) _0xoqvy() return
+        end
+    end
+end)
+
+-- Các boss đặc biệt (đã có ở phần trước, kiểm tra và bổ sung nếu thiếu)
+local specificBosses = {
+    ["\x41\x75\x74\x6f\x44\x6f\x75\x67\x68\x4b\x69\x6e\x67"] = "\x44\x6f\x75\x67\x68\x20\x4b\x69\x6e\x67",
+    ["\x41\x75\x74\x6f\x53\x6f\x75\x6c\x52\x65\x61\x70\x65\x72"] = "\x53\x6f\x75\x6c\x20\x52\x65\x61\x70\x65\x72",
+    ["\x41\x75\x74\x6f\x44\x61\x72\x6b\x62\x65\x61\x72\x64"] = "\x44\x61\x72\x6b\x62\x65\x61\x72\x64",
+    ["\x41\x75\x74\x6f\x4c\x6f\x6e\x67\x6d\x61"] = "\x4c\x6f\x6e\x67\x6d\x61",
+    ["\x41\x75\x74\x6f\x42\x65\x61\x75\x74\x69\x66\x75\x6c\x50\x69\x72\x61\x74\x65"] = "\x42\x65\x61\x75\x74\x69\x66\x75\x6c\x20\x50\x69\x72\x61\x74\x65",
+    ["\x41\x75\x74\x6f\x45\x6c\x69\x74\x65\x42\x6f\x73\x73"] = "\x45\x6c\x69\x74\x65",
+    ["\x41\x75\x74\x6f\x54\x69\x6b\x69\x42\x6f\x73\x73"] = "\x54\x69\x6b\x69",
+    ["\x41\x75\x74\x6f\x4c\x65\x76\x69\x61\x74\x68\x61\x6e\x42\x6f\x73\x73"] = "\x4c\x65\x76\x69\x61\x74\x68\x61\x6e",
+}
+for flag, bossName in pairs(specificBosses) do
+    _0xsuzc[flag] = false
+    _0x_fhmp(flag, function()
+        if not _0xsuzc[flag] then return end
+        local boss = _0xjlqt("\x4d\x6f\x64\x65\x6c", bossName)
+        if boss and boss:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and boss.Humanoid.Health > 0 then
+            _0xlnsv(boss.HumanoidRootPart.Position + Vector3.new(0, 20, 0)) _0xoqvy()
+        end
+    end)
+end
+
+-- =============================================
+-- AUTO LAW / PHOENIX RAID
+-- =============================================
+_0xsuzc["\x41\x75\x74\x6f\x4c\x61\x77\x52\x61\x69\x64"] = false
+_0xsuzc["\x41\x75\x74\x6f\x50\x68\x6f\x65\x6e\x69\x78\x52\x61\x69\x64"] = false
+_0x_fhmp("\x41\x4c\x52", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x4c\x61\x77\x52\x61\x69\x64"] then return end
+    pcall(function() _0xc2da.Remotes.Communication:InvokeServer("\x4c\x61\x77\x52\x61\x69\x64") end)
+end)
+_0x_fhmp("\x41\x50\x52", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x50\x68\x6f\x65\x6e\x69\x78\x52\x61\x69\x64"] then return end
+    pcall(function() _0xc2da.Remotes.Communication:InvokeServer("\x50\x68\x6f\x65\x6e\x69\x78\x52\x61\x69\x64") end)
+end)
+
+-- =============================================
+-- AUTO SEA EVENT SPECIFICS
+-- =============================================
+local seaEvents = {
+    ["\x41\x75\x74\x6f\x52\x75\x6d\x62\x6c\x69\x6e\x67\x57\x61\x74\x65\x72\x73"] = "\x52\x75\x6d\x62\x6c\x69\x6e\x67\x20\x57\x61\x74\x65\x72\x73",
+    ["\x41\x75\x74\x6f\x53\x68\x69\x70\x52\x61\x69\x64"] = "\x53\x68\x69\x70\x20\x52\x61\x69\x64",
+    ["\x41\x75\x74\x6f\x4d\x6f\x6e\x73\x74\x65\x72\x4d\x61\x67\x6e\x65\x74"] = "\x4d\x6f\x6e\x73\x74\x65\x72",
+    ["\x41\x75\x74\x6f\x47\x68\x6f\x73\x74\x53\x68\x69\x70"] = "\x47\x68\x6f\x73\x74\x20\x53\x68\x69\x70",
+    ["\x41\x75\x74\x6f\x46\x72\x6f\x7a\x65\x6e\x44\x69\x6d\x65\x6e\x73\x69\x6f\x6e"] = "\x46\x72\x6f\x7a\x65\x6e\x20\x44\x69\x6d\x65\x6e\x73\x69\x6f\x6e",
+}
+for flag, eventName in pairs(seaEvents) do
+    _0xsuzc[flag] = false
+    _0x_fhmp(flag, function()
+        if not _0xsuzc[flag] then return end
+        local target = _0xjlqt("\x4d\x6f\x64\x65\x6c", eventName)
+        if target and target:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and target.Humanoid.Health > 0 then
+            _0xlnsv(target.HumanoidRootPart.Position + Vector3.new(0, 15, 0)) _0xoqvy()
+        elseif target then
+            _0xlnsv(target:GetPivot().Position + Vector3.new(0, 15, 0))
+        end
+    end)
+end
+
+-- =============================================
+-- AUTO GEAR & AUTO ANCIENT CLOCK
+-- =============================================
+_0xsuzc["\x41\x75\x74\x6f\x47\x65\x61\x72"] = false
+_0xsuzc["\x41\x75\x74\x6f\x41\x6e\x63\x69\x65\x6e\x74\x43\x6c\x6f\x63\x6b"] = false
+_0x_fhmp("\x41\x47\x65", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x47\x65\x61\x72"] then return end
+    local gear = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x47\x65\x61\x72")
+    if gear then _0xrtyb(gear) end
+end)
+_0x_fhmp("\x41\x41\x43", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x41\x6e\x63\x69\x65\x6e\x74\x43\x6c\x6f\x63\x6b"] then return end
+    local clock = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6e\x63\x69\x65\x6e\x74\x20\x43\x6c\x6f\x63\x6b")
+    if clock then _0xlnsv(clock:GetPivot().Position + Vector3.new(0, 5, 0)) end
+end)
+
+-- =============================================
+-- AUTO BUY FRUIT / DROP FRUIT / FRUIT FINDER
+-- =============================================
+_0x_fhmp("\x41\x42\x46", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x42\x75\x79\x46\x72\x75\x69\x74"] then return end
+    local dealer = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x42\x6c\x6f\x78\x20\x46\x72\x75\x69\x74\x20\x44\x65\x61\x6c\x65\x72")
+    if dealer then _0xrtyb(dealer) end
+end)
+_0x_fhmp("\x41\x44\x46", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x44\x72\x6f\x70\x46\x72\x75\x69\x74"] then return end
+    for _, tool in pairs(_0xd9eh.Backpack:GetChildren()) do
+        if tool:IsA("\x54\x6f\x6f\x6c") and tool.Name:find("\x46\x72\x75\x69\x74") then
+            _0xfbgj:EquipTool(tool) task.wait(0.3) _0xfbgj:UnequipTools()
+        end
+    end
+end)
+_0x_fhmp("\x46\x46", function()
+    if not _0xsuzc["\x46\x72\x75\x69\x74\x46\x69\x6e\x64\x65\x72"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v:IsA("\x4d\x6f\x64\x65\x6c") and v.Name:find("\x46\x72\x75\x69\x74") then
+            local bb = Instance.new("\x42\x69\x6c\x6c\x62\x6f\x61\x72\x64\x47\x75\x69")
+            bb.AlwaysOnTop = true; bb.Size = UDim2.new(0, 100, 0, 50)
+            local tl = Instance.new("\x54\x65\x78\x74\x4c\x61\x62\x65\x6c")
+            tl.Text = v.Name; tl.Size = UDim2.new(1, 0, 1, 0); tl.BackgroundTransparency = 1
+            tl.TextColor3 = Color3.fromRGB(255, 255, 255); tl.Parent = bb; bb.Parent = v
+            _0xc8dg:AddItem(bb, 1)
+        end
+    end
+end)
+
+-- =============================================
+-- AUTO SWORD QUESTS (YAMA, TUSHITA, DARK BLADE)
+-- =============================================
+local swordQuests = {
+    ["\x41\x75\x74\x6f\x59\x61\x6d\x61"] = "\x59\x61\x6d\x61",
+    ["\x41\x75\x74\x6f\x54\x75\x73\x68\x69\x74\x61"] = "\x54\x75\x73\x68\x69\x74\x61",
+    ["\x41\x75\x74\x6f\x48\x61\x6c\x6c\x6f\x77\x53\x63\x79\x74\x68\x65"] = "\x48\x61\x6c\x6c\x6f\x77\x20\x53\x63\x79\x74\x68\x65",
+    ["\x41\x75\x74\x6f\x44\x61\x72\x6b\x42\x6c\x61\x64\x65\x51\x75\x65\x73\x74"] = "\x44\x61\x72\x6b\x20\x42\x6c\x61\x64\x65",
+}
+for flag, name in pairs(swordQuests) do
+    _0xsuzc[flag] = false
+    _0x_fhmp(flag, function()
+        if not _0xsuzc[flag] then return end
+        local npc = _0xjlqt("\x4d\x6f\x64\x65\x6c", name)
+        if npc then _0xrtyb(npc) end
+    end)
+end
+
+-- =============================================
+-- AUTO FIGHTING STYLES
+-- =============================================
+local fightStyles = {
+    ["\x41\x75\x74\x6f\x47\x6f\x64\x48\x75\x6d\x61\x6e"] = "\x47\x6f\x64\x20\x48\x75\x6d\x61\x6e",
+    ["\x41\x75\x74\x6f\x53\x75\x70\x65\x72\x68\x75\x6d\x61\x6e"] = "\x53\x75\x70\x65\x72\x68\x75\x6d\x61\x6e",
+    ["\x41\x75\x74\x6f\x44\x65\x61\x74\x68\x53\x74\x65\x70"] = "\x44\x65\x61\x74\x68\x20\x53\x74\x65\x70",
+    ["\x41\x75\x74\x6f\x53\x68\x61\x72\x6b\x6d\x61\x6e\x4b\x61\x72\x61\x74\x65"] = "\x53\x68\x61\x72\x6b\x6d\x61\x6e\x20\x4b\x61\x72\x61\x74\x65",
+    ["\x41\x75\x74\x6f\x45\x6c\x65\x63\x74\x72\x69\x63\x43\x6c\x61\x77"] = "\x45\x6c\x65\x63\x74\x72\x69\x63\x20\x43\x6c\x61\x77",
+    ["\x41\x75\x74\x6f\x44\x72\x61\x67\x6f\x6e\x54\x61\x6c\x6f\x6e"] = "\x44\x72\x61\x67\x6f\x6e\x20\x54\x61\x6c\x6f\x6e",
+    ["\x41\x75\x74\x6f\x53\x61\x6e\x67\x75\x69\x6e\x65\x41\x72\x74"] = "\x53\x61\x6e\x67\x75\x69\x6e\x65\x20\x41\x72\x74",
+}
+for flag, name in pairs(fightStyles) do
+    _0xsuzc[flag] = false
+    _0x_fhmp(flag, function()
+        if not _0xsuzc[flag] then return end
+        local npc = _0xjlqt("\x4d\x6f\x64\x65\x6c", name)
+        if npc then _0xrtyb(npc) end
+    end)
+end
+
+-- =============================================
+-- TELEPORT PLAYER / SHOP / EVENT (đã có một phần, bổ sung)
+-- =============================================
+_0_tptab:CreateTextBox({Name="\x54\x65\x6c\x65\x70\x6f\x72\x74\x20\x74\x6f\x20\x50\x6c\x61\x79\x65\x72", PlaceholderText="\x45\x6e\x74\x65\x72\x20\x50\x6c\x61\x79\x65\x72\x20\x4e\x61\x6d\x65", Callback=function(text) for _, p in pairs(_0x5b3c:GetPlayers()) do if p.Name:lower() == text:lower() and p.Character and p.Character:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74") then _0xlnsv(p.Character.HumanoidRootPart.Position + Vector3.new(0, 5, 0)); break end end end})
+_0_tptab:CreateButton({Name="\x54\x65\x6c\x65\x70\x6f\x72\x74\x20\x74\x6f\x20\x53\x68\x6f\x70", Callback=function() local shop = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x53\x68\x6f\x70"); if shop then _0xrtyb(shop) end end})
+_0_tptab:CreateButton({Name="\x54\x65\x6c\x65\x70\x6f\x72\x74\x20\x74\x6f\x20\x53\x65\x61\x20\x42\x65\x61\x73\x74", Callback=function() local sb = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x53\x65\x61\x20\x42\x65\x61\x73\x74"); if sb and sb:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74") then _0xlnsv(sb.HumanoidRootPart.Position) end end})
+_0_tptab:CreateButton({Name="\x54\x65\x6c\x65\x70\x6f\x72\x74\x20\x74\x6f\x20\x46\x72\x75\x69\x74\x20\x53\x70\x61\x77\x6e", Callback=function() local fs = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x46\x72\x75\x69\x74\x20\x53\x70\x61\x77\x6e"); if fs then _0xrtyb(fs) end end})
+
+-- =============================================
+-- PvP TOGGLES: FAST ATTACK, AUTO SKILL, COMBO, AUTO KEN (đã có, kiểm tra UI)
+-- =============================================
+_0xupwz:CreateToggle({Name="\x46\x61\x73\x74\x20\x41\x74\x74\x61\x63\x6b", CurrentValue=false, Callback=function(a)_0xsuzc["\x46\x61\x73\x74\x41\x74\x74\x61\x63\x6b"]=a end})
+_0xupwz:CreateToggle({Name="\x41\x75\x74\x6f\x20\x53\x6b\x69\x6c\x6c", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x53\x6b\x69\x6c\x6c"]=a end})
+_0xupwz:CreateToggle({Name="\x43\x6f\x6d\x62\x6f", CurrentValue=false, Callback=function(a)_0xsuzc["\x43\x6f\x6d\x62\x6f"]=a end})
+_0xupwz:CreateToggle({Name="\x41\x75\x74\x6f\x20\x4b\x65\x6e", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x4b\x65\x6e"]=a end})
+_0xupwz:CreateToggle({Name="\x41\x69\x6d\x20\x41\x73\x73\x69\x73\x74", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x69\x6d\x41\x73\x73\x69\x73\x74"]=a end})
+
+-- =============================================
+-- SERVER HOP TOGGLES (đã có, kiểm tra)
+-- =============================================
+_0xqlsv:CreateToggle({Name="\x48\x6f\x70\x20\x42\x6f\x73\x73", CurrentValue=false, Callback=function(a)_0xsuzc["\x48\x6f\x70\x42\x6f\x73\x73"]=a end})
+_0xqlsv:CreateToggle({Name="\x48\x6f\x70\x20\x46\x72\x75\x69\x74", CurrentValue=false, Callback=function(a)_0xsuzc["\x48\x6f\x70\x46\x72\x75\x69\x74"]=a end})
+_0xqlsv:CreateToggle({Name="\x48\x6f\x70\x20\x4d\x69\x72\x61\x67\x65", CurrentValue=false, Callback=function(a)_0xsuzc["\x48\x6f\x70\x4d\x69\x72\x61\x67\x65"]=a end})
+_0xqlsv:CreateToggle({Name="\x48\x6f\x70\x20\x4c\x65\x76\x69\x61\x74\x68\x61\x6e", CurrentValue=false, Callback=function(a)_0xsuzc["\x48\x6f\x70\x4c\x65\x76\x69\x61\x74\x68\x61\x6e"]=a end})
+_0xqlsv:CreateToggle({Name="\x48\x6f\x70\x20\x45\x6c\x69\x74\x65", CurrentValue=false, Callback=function(a)_0xsuzc["\x48\x6f\x70\x45\x6c\x69\x74\x65"]=a end})
+_0xqlsv:CreateToggle({Name="\x48\x6f\x70\x20\x4c\x65\x67\x65\x6e\x64\x61\x72\x79\x20\x53\x77\x6f\x72\x64", CurrentValue=false, Callback=function(a)_0xsuzc["\x48\x6f\x70\x4c\x65\x67\x65\x6e\x64\x61\x72\x79\x53\x77\x6f\x72\x64"]=a end})
+
+-- =============================================
+-- PLAYER TOGGLES: REJOIN, ANTI AFK, FLY, INFINITE ENERGY, INFINITE GEPPO, FPS BOOST
+-- =============================================
+_0xrmtw:CreateToggle({Name="\x52\x65\x6a\x6f\x69\x6e", CurrentValue=false, Callback=function(a)_0xsuzc["\x52\x65\x6a\x6f\x69\x6e"]=a end})
+_0xrmtw:CreateToggle({Name="\x41\x6e\x74\x69\x20\x41\x46\x4b", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x6e\x74\x69\x41\x46\x4b"]=a end})
+_0xrmtw:CreateToggle({Name="\x46\x6c\x79", CurrentValue=false, Callback=function(a)_0xsuzc["\x46\x6c\x79"]=a end})
+_0xrmtw:CreateToggle({Name="\x49\x6e\x66\x69\x6e\x69\x74\x65\x20\x45\x6e\x65\x72\x67\x79", CurrentValue=false, Callback=function(a)_0xsuzc["\x49\x6e\x66\x69\x6e\x69\x74\x65\x45\x6e\x65\x72\x67\x79"]=a end})
+_0xrmtw:CreateToggle({Name="\x49\x6e\x66\x69\x6e\x69\x74\x65\x20\x47\x65\x70\x70\x6f", CurrentValue=false, Callback=function(a)_0xsuzc["\x49\x6e\x66\x69\x6e\x69\x74\x65\x47\x65\x70\x70\x6f"]=a end})
+_0xrmtw:CreateToggle({Name="\x46\x50\x53\x20\x42\x6f\x6f\x73\x74", CurrentValue=false, Callback=function(a)_0xsuzc["\x46\x50\x53\x42\x6f\x6f\x73\x74"]=a end})
+
+-- =============================================
+-- MISC TOGGLES: AUTO UPGRADE, AUTO BUY ABILITY, AUTO BUY HAKI, AUTO REDEEM CODES, WEBHOOK
+-- =============================================
+_0xbwdg:CreateToggle({Name="\x41\x75\x74\x6f\x20\x55\x70\x67\x72\x61\x64\x65", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x55\x70\x67\x72\x61\x64\x65"]=a end})
+_0xbwdg:CreateToggle({Name="\x41\x75\x74\x6f\x20\x42\x75\x79\x20\x41\x62\x69\x6c\x69\x74\x79", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x42\x75\x79\x41\x62\x69\x6c\x69\x74\x79"]=a end})
+_0xbwdg:CreateToggle({Name="\x41\x75\x74\x6f\x20\x42\x75\x79\x20\x48\x61\x6b\x69", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x42\x75\x79\x48\x61\x6b\x69"]=a end})
+_0xbwdg:CreateToggle({Name="\x41\x75\x74\x6f\x20\x52\x65\x64\x65\x65\x6d\x20\x43\x6f\x64\x65\x73", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x52\x65\x64\x65\x65\x6d\x43\x6f\x64\x65\x73"]=a end})
+_0xbwdg:CreateToggle({Name="\x57\x65\x62\x68\x6f\x6f\x6b", CurrentValue=false, Callback=function(a)_0xsuzc["\x57\x65\x62\x68\x6f\x6f\x6b"]=a end})
+_0xbwdg:CreateTextBox({Name="\x57\x65\x62\x68\x6f\x6f\x6b\x20\x55\x52\x4c", PlaceholderText="\x45\x6e\x74\x65\x72\x20\x44\x69\x73\x63\x6f\x72\x64\x20\x57\x65\x62\x68\x6f\x6f\x6b", Callback=function(a)_0xsuzc["\x57\x65\x62\x68\x6f\x6f\x6b\x55\x52\x4c"]=a end})
+
+-- =============================================
+-- KÍCH HOẠT LẠI TẤT CẢ VÒNG LẶP
+-- =============================================
+_0xmhor()
+-- =============================================
+-- APPEL CAT HUB - CONTINUED: SKILL SYSTEM & MORE
+-- =============================================
+
+-- Bổ sung flag cho Hold Skills
+_0xsuzc["\x48\x6f\x6c\x64\x53\x6b\x69\x6c\x6c\x73"] = {
+    Z = true, X = true, C = true, V = true, F = true, M1 = true
+}
+_0xsuzc["\x53\x6b\x69\x6c\x6c\x44\x65\x6c\x61\x79"] = 0.5
+_0xsuzc["\x50\x72\x69\x6f\x72\x69\x74\x79\x53\x6b\x69\x6c\x6c"] = "\x5a"
+
+-- Hàm sử dụng kỹ năng theo thứ tự ưu tiên
+_0x_fhmp("\x41\x75\x74\x6f\x53\x6b\x69\x6c\x6c\x4c\x6f\x6f\x70", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x53\x6b\x69\x6c\x6c"] then return end
+    local skills = _0xsuzc["\x48\x6f\x6c\x64\x53\x6b\x69\x6c\x6c\x73"]
+    local delayTime = _0xsuzc["\x53\x6b\x69\x6c\x6c\x44\x65\x6c\x61\x79"]
+    local priority = _0xsuzc["\x50\x72\x69\x6f\x72\x69\x74\x79\x53\x6b\x69\x6c\x6c"]
+
+    -- Dùng skill ưu tiên trước
+    if skills[priority] then
+        _0xikps(Enum.KeyCode[priority])
+        task.wait(delayTime)
+    end
+
+    -- Sau đó dùng các skill còn lại
+    local order = {"\x5a", "\x58", "\x43", "\x56", "\x46", "\x4d\x31"}
+    for _, k in ipairs(order) do
+        if k ~= priority and skills[k] then
+            _0xikps(Enum.KeyCode[k])
+            task.wait(delayTime)
+        end
+    end
+end)
+
+-- =============================================
+-- AUTO RACE V2/V3/V4 CHI TIẾT HƠN
+-- =============================================
+_0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+_0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = false
+_0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x34"] = false
+
+-- Race V2: thường yêu cầu hoàn thành puzzle hoặc nhiệm vụ ở Sea 2
+_0x_fhmp("\x41\x52\x56\x32", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] then return end
+    local race = _0xd9eh.Data and _0xd9eh.Data.Race and _0xd9eh.Data.Race.Value
+    if not race then return end
+    -- Tìm NPC Race V2 tương ứng (ví dụ: Human Race V2 NPC)
+    local npc = _0xjlqt("\x4d\x6f\x64\x65\x6c", race .. " \x52\x61\x63\x65\x20\x56\x32")
+    if npc then
+        _0xrtyb(npc)
+        task.wait(2)
+        -- Sau khi nói chuyện, có thể cần làm nhiệm vụ (tạm bật Auto Farm để giết quái nếu cần)
+        _0x_start_autofarm()
+    else
+        -- Đến địa điểm thường có NPC Race V2 (Ví dụ: Green Zone cho Human)
+        _0xlnsv(Vector3.new(-1920, 23, -500))
+    end
+end)
+
+-- Race V3: thường yêu cầu đánh boss và thu thập item
+_0x_fhmp("\x41\x52\x56\x33", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] then return end
+    local race = _0xd9eh.Data and _0xd9eh.Data.Race and _0xd9eh.Data.Race.Value
+    if not race then return end
+    local npc = _0xjlqt("\x4d\x6f\x64\x65\x6c", race .. " \x52\x61\x63\x65\x20\x56\x33")
+    if npc then
+        _0xrtyb(npc)
+        task.wait(2)
+        _0x_start_autofarm()
+    else
+        -- Đến địa điểm (ví dụ: Snow Mountain cho một số race)
+        _0xlnsv(Vector3.new(1605, 12, 2143))
+    end
+end)
+
+-- Race V4: đã có _0x_fhmp("\x41\x52\x56\x34\x46") cho full quest, nhưng cần thêm loop đơn giản nếu chỉ bật Auto Race V4
+_0x_fhmp("\x41\x52\x56\x34", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x34"] then return end
+    -- Nếu bật Auto Race V4 đơn lẻ, kích hoạt luôn Auto Race V4 Full
+    _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x34\x46\x75\x6c\x6c"] = true
+end)
+
+-- =============================================
+-- AUTO AWAKEN FRUIT (MỞ KHÓA KỸ NĂNG)
+-- =============================================
+_0x_fhmp("\x41\x41\x77\x61", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x41\x77\x61\x6b\x65\x6e"] then return end
+    local moves = {"\x5a", "\x58", "\x43", "\x56", "\x46"}
+    for _, move in ipairs(moves) do
+        pcall(function()
+            _0xc2da.Remotes.Communication:InvokeServer("\x41\x77\x61\x6b\x65\x6e", move)
+        end)
+        task.wait(0.5)
+    end
+    _0x_notify("\x41\x77\x61\x6b\x65\x6e", "\x41\x74\x74\x65\x6d\x70\x74\x65\x64\x20\x74\x6f\x20\x61\x77\x61\x6b\x65\x6e\x20\x61\x6c\x6c\x20\x6d\x6f\x76\x65\x73", 2)
+end)
+
+-- =============================================
+-- KILL AURA (Đã có, đảm bảo đúng logic)
+-- =============================================
+_0x_fhmp("\x4b\x41", function()
+    if not _0xsuzc["\x4b\x69\x6c\x6c\x41\x75\x72\x61"] then return end
+    local range = _0xsuzc["\x41\x74\x74\x61\x63\x6b\x44\x69\x73\x74\x61\x6e\x63\x65"] or 10
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v:IsA("\x4d\x6f\x64\x65\x6c") and v:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and v.Humanoid.Health > 0 then
+            local hrp = v:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74")
+            if hrp and (hrp.Position - _0xachk.Position).Magnitude < range then
+                pcall(function()
+                    _0xc2da.Remotes.Damage:FireServer(v, hrp.Position)
+                end)
+            end
+        end
+    end
+end)
+
+-- =============================================
+-- UI BỔ SUNG CHO CÁC TÍNH NĂNG TRÊN
+-- =============================================
+-- Tab Hold Skill (đã có _0xtovy) - thêm toggle cho Auto Skill và Skill Delay
+_0xtovy:CreateToggle({Name="\x41\x75\x74\x6f\x20\x53\x6b\x69\x6c\x6c", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x53\x6b\x69\x6c\x6c"]=a end})
+_0xtovy:CreateSlider({Name="\x53\x6b\x69\x6c\x6c\x20\x44\x65\x6c\x61\x79", Range={0.1, 2}, Increment=0.1, Suffix="\x73", CurrentValue=0.5, Flag="\x53\x6b\x69\x6c\x6c\x44\x65\x6c\x61\x79", Callback=function(v)_0xsuzc["\x53\x6b\x69\x6c\x6c\x44\x65\x6c\x61\x79"]=v end})
+_0xtovy:CreateDropdown({Name="\x50\x72\x69\x6f\x72\x69\x74\x79\x20\x53\x6b\x69\x6c\x6c", Options={"\x5a","\x58","\x43","\x56","\x46","\x4d\x31"}, CurrentOption={"\x5a"}, Flag="\x50\x72\x69\x6f\x72\x69\x74\x79\x53\x6b\x69\x6c\x6c", Callback=function(v)_0xsuzc["\x50\x72\x69\x6f\x72\x69\x74\x79\x53\x6b\x69\x6c\x6c"]=v[1] end})
+
+-- Tab Race & Trials (_0xxszc) - đảm bảo có Auto Race V2/V3/V4 toggles
+_0xxszc:CreateToggle({Name="\x41\x75\x74\x6f\x20\x52\x61\x63\x65\x20\x56\x32", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"]=a end})
+_0xxszc:CreateToggle({Name="\x41\x75\x74\x6f\x20\x52\x61\x63\x65\x20\x56\x33", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"]=a end})
+_0xxszc:CreateToggle({Name="\x41\x75\x74\x6f\x20\x52\x61\x63\x65\x20\x56\x34", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x34"]=a end})
+_0xxszc:CreateToggle({Name="\x41\x75\x74\x6f\x20\x52\x61\x63\x65\x20\x56\x34\x20\x46\x75\x6c\x6c", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x34\x46\x75\x6c\x6c"]=a end})
+
+-- Tab Fruit & Raid (_0ytad) - thêm Auto Awaken, Kill Aura
+_0ytad:CreateToggle({Name="\x41\x75\x74\x6f\x20\x41\x77\x61\x6b\x65\x6e", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x41\x77\x61\x6b\x65\x6e"]=a end})
+_0ytad:CreateToggle({Name="\x4b\x69\x6c\x6c\x20\x41\x75\x72\x61", CurrentValue=false, Callback=function(a)_0xsuzc["\x4b\x69\x6c\x6c\x41\x75\x72\x61"]=a end})
+
+-- Tab Settings - Webhook và Notification đã có
+
+-- =============================================
+-- SỬA LẠI HÀM _0xmhor() ĐỂ ĐĂNG KÝ TẤT CẢ LOOP
+-- =============================================
+-- Đảm bảo _0xmhor() bao gồm tất cả các _0x_fhmp đã định nghĩa.
+-- Vì script quá dài, ta giả định _0xmhor() là hàm tổng hợp gọi tất cả các _0x_fhmp đã có.
+-- Trong thực tế, _0xmhor() đã được định nghĩa ở phần đầu và sẽ tự động kích hoạt các loop khi script chạy.
+-- Tuy nhiên, các _0x_fhmp được thêm sau khi _0xmhor() chạy lần đầu sẽ không được tự động kích hoạt.
+-- Do đó, ở cuối script, ta luôn gọi lại _0xmhor() để đảm bảo tất cả loop mới được đăng ký.
+_0xmhor()
+
+-- =============================================
+-- HOÀN THIỆN TELEPORT DANH SÁCH ĐẢO (đã có nhiều, bổ sung nếu thiếu)
+-- =============================================
+-- Danh sách đảo đã được thêm ở phần trước. Kiểm tra và thêm nốt nếu cần.
+local additionalIslands = {
+    ["\x50\x6f\x72\x74\x20\x54\x6f\x77\x6e"] = Vector3.new(-300, 13, 300),
+    ["\x4d\x69\x64\x64\x6c\x65\x20\x54\x6f\x77\x6e"] = Vector3.new(-700, 13, -350),
+    ["\x43\x6f\x6c\x6f\x73\x73\x65\x75\x6d"] = Vector3.new(-1550, 13, 200),
+    ["\x50\x72\x69\x73\x6f\x6e"] = Vector3.new(4400, 14, -1500),
+    ["\x4d\x61\x67\x6d\x61\x20\x56\x69\x6c\x6c\x61\x67\x65"] = Vector3.new(-5000, 14, -1500),
+    ["\x55\x6e\x64\x65\x72\x77\x61\x74\x65\x72\x20\x43\x69\x74\x79"] = Vector3.new(5000, 14, -2500),
+    ["\x43\x61\x73\x74\x6c\x65\x20\x6f\x6e\x20\x74\x68\x65\x20\x53\x65\x61"] = Vector3.new(-8000, 14, -7000),
+}
+for name, pos in pairs(additionalIslands) do
+    _0_tptab:CreateButton({Name="\x54\x65\x6c\x65\x70\x6f\x72\x74\x20\x74\x6f\x20" .. name, Callback=function() _0xlnsv(pos) end})
+end
+
+-- =============================================
+-- KẾT THÚC SCRIPT
+-- =============================================
+-- Tiếp tục Appel Cat Hub - Auto CDK State Machine nâng cao
+
+_0xsuzc["CDK_State"] = 0
+_0xsuzc["CDK_Timer"] = 0
+_0xsuzc["CDK_SubState"] = 0
+
+local function _0x_hopServer()
+    pcall(function()
+        local d = _0xb1c9:JSONDecode(game:HttpGet("\x68\x74\x74\x70\x73\x3a\x2f\x2f\x67\x61\x6d\x65\x73\x2e\x72\x6f\x62\x6c\x6f\x78\x2e\x63\x6f\x6d\x2f\x76\x31\x2f\x67\x61\x6d\x65\x73\x2f".._0x4a2b.PlaceId.."\x2f\x73\x65\x72\x76\x65\x72\x73\x2f\x50\x75\x62\x6c\x69\x63\x3f\x6c\x69\x6d\x69\x74\x3d\x31\x30"))
+        for _,v in ipairs(d.data) do if v.playing < v.maxPlayers then _0xa0b8:TeleportToPlaceInstance(_0x4a2b.PlaceId, v.id, _0xd9eh) return end end
+    end)
+end
+
+local function _0x_has_tool(name)
+    for _,v in pairs(_0xd9eh.Backpack:GetChildren()) do if v:IsA("\x54\x6f\x6f\x6c") and v.Name:lower():find(name:lower()) then return true end end
+    return _0xeafi and _0xeafi:FindFirstChild(name) ~= nil
+end
+
+local function _0x_find_npc(name)
+    return _0xjlqt("\x4d\x6f\x64\x65\x6c", name)
+end
+
+local function _0x_equip_tool(name)
+    local t = _0xd9eh.Backpack:FindFirstChild(name) or _0xeafi:FindFirstChild(name)
+    if t then _0xfbgj:EquipTool(t) end
+end
+
+-- CDK State: 0=Lấy Yama, 1=Lấy Tushita, 2=Vào Crypt, 3=Làm thử thách, 4=Đánh boss, 5=Nhận CDK
+
+_0x_fhmp("CDK_Main", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x43\x44\x4b"] then return end
+    local state = _0xsuzc["CDK_State"]
+    if state == 0 then
+        -- Lấy Yama
+        if _0x_has_tool("\x59\x61\x6d\x61") then
+            _0xsuzc["CDK_State"] = 1
+            return
+        end
+        local npc = _0x_find_npc("\x59\x61\x6d\x61") or _0x_find_npc("\x45\x6c\x69\x74\x65\x20\x48\x75\x6e\x74\x65\x72")
+        if npc then
+            _0xrtyb(npc)
+            task.wait(3)
+        else
+            _0xlnsv(Vector3.new(5300,14,-3100)) -- Hydra Island
+        end
+    elseif state == 1 then
+        -- Lấy Tushita
+        if _0x_has_tool("\x54\x75\x73\x68\x69\x74\x61") then
+            _0xsuzc["CDK_State"] = 2
+            return
+        end
+        local boss = _0x_find_npc("\x54\x68\x75\x6e\x64\x65\x72\x20\x47\x6f\x64")
+        if boss and boss:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and boss.Humanoid.Health > 0 then
+            _0xlnsv(boss.HumanoidRootPart.Position + Vector3.new(0,15,0))
+            _0xoqvy()
+        elseif boss then
+            _0xrtyb(boss)
+            task.wait(2)
+        else
+            _0xlnsv(Vector3.new(-6000,15,-9000)) -- Floating Turtle
+        end
+    elseif state == 2 then
+        -- Vào Crypt và bắt đầu quest
+        local npc = _0x_find_npc("\x43\x72\x79\x70\x74") or _0x_find_npc("\x43\x75\x72\x73\x65\x64")
+        if npc then
+            _0xrtyb(npc)
+            _0xsuzc["CDK_State"] = 3
+            _0xsuzc["CDK_SubState"] = 0
+            task.wait(2)
+        else
+            _0xlnsv(Vector3.new(1000,20,-3000))
+        end
+    elseif state == 3 then
+        -- Làm thử thách: 0=Pain, 1=Fear, 2=Misery
+        local sub = _0xsuzc["CDK_SubState"]
+        local trials = {"\x50\x61\x69\x6e","\x46\x65\x61\x72","\x4d\x69\x73\x65\x72\x79"}
+        local positions = {Vector3.new(2000,15,-4000), Vector3.new(3000,20,-5000), Vector3.new(4000,25,-6000)}
+        if sub <= 2 then
+            _0xlnsv(positions[sub+1])
+            local target = _0xkmru("\x4d\x6f\x64\x65\x6c", {"\x42\x6f\x73\x73","\x4e\x50\x43"}, 300)
+            if target and target:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and target.Humanoid.Health > 0 then
+                _0xlnsv(target.HumanoidRootPart.Position + Vector3.new(0,10,0))
+                _0xoqvy()
+            else
+                -- Hoàn thành trial này
+                _0xsuzc["CDK_SubState"] = sub + 1
+                if sub == 2 then _0xsuzc["CDK_State"] = 4 end
+            end
+        end
+    elseif state == 4 then
+        -- Đánh boss cuối
+        local boss = _0x_find_npc("\x43\x44\x4b\x20\x42\x6f\x73\x73") or _0xkmru("\x4d\x6f\x64\x65\x6c", {"\x42\x6f\x73\x73"}, 3000)
+        if boss and boss:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and boss.Humanoid.Health > 0 then
+            _0xlnsv(boss.HumanoidRootPart.Position + Vector3.new(0,20,0))
+            _0xoqvy()
+        else
+            _0xsuzc["CDK_State"] = 5
+        end
+    elseif state == 5 then
+        -- Nhận CDK
+        if _0x_has_tool("\x43\x75\x72\x73\x65\x64\x20\x44\x75\x61\x6c\x20\x4b\x61\x74\x61\x6e\x61") then
+            _0xsuzc["\x41\x75\x74\x6f\x43\x44\x4b"] = false
+            return
+        end
+        local npc = _0x_find_npc("\x43\x72\x79\x70\x74") or _0x_find_npc("\x43\x75\x72\x73\x65\x64")
+        if npc then _0xrtyb(npc) task.wait(2) end
+    end
+end)
+
+-- =====================
+-- Auto Race V4 hoàn chỉnh (kiểm tra điều kiện và thực hiện)
+-- =====================
+_0x_fhmp("RaceV4_Full", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x34"] then return end
+    -- Kiểm tra đã có Mirror Fractal chưa
+    if not _0x_has_tool("\x4d\x69\x72\x72\x6f\x72\x20\x46\x72\x61\x63\x74\x61\x6c") then
+        _0xsuzc["\x41\x75\x74\x6f\x4d\x69\x72\x72\x6f\x72\x46\x72\x61\x63\x74\x61\x6c"] = true
+        return
+    end
+    -- Kiểm tra đã có Blue Gear chưa
+    if not _0x_has_tool("\x42\x6c\x75\x65\x20\x47\x65\x61\x72") then
+        _0xsuzc["\x41\x75\x74\x6f\x42\x6c\x75\x65\x47\x65\x61\x72"] = true
+        return
+    end
+    -- Kiểm tra Full Moon
+    local moon = _0xe4fc:GetMoonPhase()
+    if moon < 0.45 or moon > 0.55 then
+        _0x_hopServer()
+        return
+    end
+    -- Đến Temple of Time
+    local temple = _0x_find_npc("\x54\x65\x6d\x70\x6c\x65\x20\x6f\x66\x20\x54\x69\x6d\x65")
+    if temple then
+        _0xlnsv(temple:GetPivot().Position + Vector3.new(0,10,0))
+        task.wait(2)
+        -- Vào đúng trial theo race
+        local race = _0xd9eh.Data and _0xd9eh.Data.Race and _0xd9eh.Data.Race.Value or "\x48\x75\x6d\x61\x6e"
+        local door = _0x_find_npc(race.." \x54\x72\x69\x61\x6c")
+        if door then
+            _0xlnsv(door:GetPivot().Position + Vector3.new(0,5,0))
+            task.wait(1)
+            fireproximityprompt(door:FindFirstChildWhichIsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74"))
+            task.wait(3)
+            -- Tự động chiến đấu
+            _0x_start_autofarm()
+        end
+    else
+        _0xlnsv(Vector3.new(1000,20,-3000))
+    end
+end)
+
+-- =====================
+-- Auto Leviathan (tìm và săn)
+-- =====================
+_0x_fhmp("Leviathan_Hunt", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x4c\x65\x76\x69\x61\x74\x68\x61\x6e"] then return end
+    local levi = _0xkmru("\x4d\x6f\x64\x65\x6c", {"\x4c\x65\x76\x69\x61\x74\x68\x61\x6e"}, 10000)
+    if levi and levi:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and levi.Humanoid.Health > 0 then
+        _0xlnsv(levi.HumanoidRootPart.Position + Vector3.new(0,30,0))
+        _0xoqvy()
+        -- Kiểm tra nếu có Frozen Heart rơi ra thì nhặt
+        for _,v in pairs(_0xd3eb:GetDescendants()) do
+            if v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") and v.Name:find("\x46\x72\x6f\x7a\x65\x6e\x20\x48\x65\x61\x72\x74") then
+                if (v.Position - _0xachk.Position).Magnitude < 100 then
+                    _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+                end
+            end
+        end
+    else
+        -- Di chuyển liên tục để tìm
+        _0xikps(Enum.KeyCode.W)
+        -- Nếu quá 5 phút không thấy thì hop server
+        _0xsuzc["CDK_Timer"] = (_0xsuzc["CDK_Timer"] or 0) + 1
+        if _0xsuzc["CDK_Timer"] > 3000 then
+            _0x_hopServer()
+            _0xsuzc["CDK_Timer"] = 0
+        end
+    end
+end)
+
+-- =====================
+-- Auto Shop (mua tất cả các item quan trọng)
+-- =====================
+_0x_fhmp("Auto_Shop", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x53\x68\x6f\x70"] then return end
+    -- Mua vũ khí, Haki màu, thuyền, v.v. nếu đủ tiền và chưa có
+    local items = {
+        {"\x46\x69\x67\x68\x74\x69\x6e\x67\x20\x53\x74\x79\x6c\x65", "\x53\x75\x70\x65\x72\x68\x75\x6d\x61\x6e"},
+        {"\x4c\x65\x67\x65\x6e\x64\x61\x72\x79\x20\x53\x77\x6f\x72\x64", "\x53\x61\x62\x65\x72"},
+        {"\x41\x75\x72\x61\x20\x43\x6f\x6c\x6f\x72", "\x52\x65\x64"},
+        {"\x42\x6f\x61\x74", "\x45\x6e\x66\x6f\x72\x63\x65\x72"},
+    }
+    for _, item in ipairs(items) do
+        if not _0x_has_tool(item[1]) then
+            local npc = _0x_find_npc(item[1])
+            if npc then
+                _0xrtyb(npc)
+                task.wait(2)
+                -- Chọn mua
+                for _, prompt in pairs(npc:GetDescendants()) do
+                    if prompt:IsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74") and prompt.ActionText:find(item[2]) then
+                        fireproximityprompt(prompt)
+                        break
+                    end
+                end
+                task.wait(1)
+            end
+        end
+    end
+end)
+
+-- =====================
+-- UI BỔ SUNG
+-- =====================
+-- Thêm UI cho Auto Shop (nếu chưa có)
+_0xpkru:CreateToggle({Name="\x41\x75\x74\x6f\x20\x42\x75\x79\x20\x45\x73\x73\x65\x6e\x74\x69\x61\x6c\x73", CurrentValue=false, Callback=function(a) _0xsuzc["\x41\x75\x74\x6f\x53\x68\x6f\x70"] = a end})
+
+-- Cập nhật hàm _0xmhor nếu cần (đã gọi ở cuối)
+_0xmhor()
+-- Auto Bone
+_0xsuzc["\x41\x75\x74\x6f\x42\x6f\x6e\x65"] = false
+_0x_fhmp("\x41\x42\x6e", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x42\x6f\x6e\x65"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name == "\x42\x6f\x6e\x65" and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Ectoplasm
+_0xsuzc["\x41\x75\x74\x6f\x45\x63\x74\x6f\x70\x6c\x61\x73\x6d"] = false
+_0x_fhmp("\x41\x45\x63", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x45\x63\x74\x6f\x70\x6c\x61\x73\x6d"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x45\x63\x74\x6f\x70\x6c\x61\x73\x6d") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Magma Ore
+_0xsuzc["\x41\x75\x74\x6f\x4d\x61\x67\x6d\x61\x4f\x72\x65"] = false
+_0x_fhmp("\x41\x4d\x4f", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x4d\x61\x67\x6d\x61\x4f\x72\x65"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x4d\x61\x67\x6d\x61") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Scrap Metal
+_0xsuzc["\x41\x75\x74\x6f\x53\x63\x72\x61\x70\x4d\x65\x74\x61\x6c"] = false
+_0x_fhmp("\x41\x53\x63\x72", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x53\x63\x72\x61\x70\x4d\x65\x74\x61\x6c"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x53\x63\x72\x61\x70") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Leather
+_0xsuzc["\x41\x75\x74\x6f\x4c\x65\x61\x74\x68\x65\x72"] = false
+_0x_fhmp("\x41\x4c\x65\x61", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x4c\x65\x61\x74\x68\x65\x72"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x4c\x65\x61\x74\x68\x65\x72") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Angel Wings
+_0xsuzc["\x41\x75\x74\x6f\x41\x6e\x67\x65\x6c\x57\x69\x6e\x67\x73"] = false
+_0x_fhmp("\x41\x41\x57", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x41\x6e\x67\x65\x6c\x57\x69\x6e\x67\x73"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x41\x6e\x67\x65\x6c") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Fish Tail
+_0xsuzc["\x41\x75\x74\x6f\x46\x69\x73\x68\x54\x61\x69\x6c"] = false
+_0x_fhmp("\x41\x46\x54", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x46\x69\x73\x68\x54\x61\x69\x6c"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x46\x69\x73\x68") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Gunpowder
+_0xsuzc["\x41\x75\x74\x6f\x47\x75\x6e\x70\x6f\x77\x64\x65\x72"] = false
+_0x_fhmp("\x41\x47\x70", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x47\x75\x6e\x70\x6f\x77\x64\x65\x72"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x47\x75\x6e\x70\x6f\x77\x64\x65\x72") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Mystic Droplet
+_0xsuzc["\x41\x75\x74\x6f\x4d\x79\x73\x74\x69\x63\x44\x72\x6f\x70\x6c\x65\x74"] = false
+_0x_fhmp("\x41\x4d\x44", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x4d\x79\x73\x74\x69\x63\x44\x72\x6f\x70\x6c\x65\x74"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x4d\x79\x73\x74\x69\x63") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Conjured Cocoa
+_0xsuzc["\x41\x75\x74\x6f\x43\x6f\x6e\x6a\x75\x72\x65\x64\x43\x6f\x63\x6f\x61"] = false
+_0x_fhmp("\x41\x43\x43", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x43\x6f\x6e\x6a\x75\x72\x65\x64\x43\x6f\x63\x6f\x61"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x43\x6f\x6e\x6a\x75\x72\x65\x64") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Dragon Scales
+_0xsuzc["\x41\x75\x74\x6f\x44\x72\x61\x67\x6f\x6e\x53\x63\x61\x6c\x65\x73"] = false
+_0x_fhmp("\x41\x44\x53", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x44\x72\x61\x67\x6f\x6e\x53\x63\x61\x6c\x65\x73"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x44\x72\x61\x67\x6f\x6e") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Radioactive Material
+_0xsuzc["\x41\x75\x74\x6f\x52\x61\x64\x69\x6f\x61\x63\x74\x69\x76\x65"] = false
+_0x_fhmp("\x41\x52\x4d", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x64\x69\x6f\x61\x63\x74\x69\x76\x65"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x52\x61\x64\x69\x6f\x61\x63\x74\x69\x76\x65") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Demonic Wisp
+_0xsuzc["\x41\x75\x74\x6f\x44\x65\x6d\x6f\x6e\x69\x63\x57\x69\x73\x70"] = false
+_0x_fhmp("\x41\x44\x57", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x44\x65\x6d\x6f\x6e\x69\x63\x57\x69\x73\x70"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x44\x65\x6d\x6f\x6e\x69\x63") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Mini Tusk
+_0xsuzc["\x41\x75\x74\x6f\x4d\x69\x6e\x69\x54\x75\x73\x6b"] = false
+_0x_fhmp("\x41\x4d\x54", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x4d\x69\x6e\x69\x54\x75\x73\x6b"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x4d\x69\x6e\x69") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- Auto Vampire Fang
+_0xsuzc["\x41\x75\x74\x6f\x56\x61\x6d\x70\x69\x72\x65\x46\x61\x6e\x67"] = false
+_0x_fhmp("\x41\x56\x46", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x56\x61\x6d\x70\x69\x72\x65\x46\x61\x6e\x67"] then return end
+    for _, v in pairs(_0xd3eb:GetDescendants()) do
+        if v.Name:find("\x56\x61\x6d\x70\x69\x72\x65") and v:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if (v.Position - _0xachk.Position).Magnitude < 200 then
+                _0xlnsv(v.Position) task.wait(0.3) _0xqsxa(v,0) _0xqsxa(v,1)
+            end
+        end
+    end
+end)
+
+-- UI toggles cho materials trên (đặt trong tab Farming _0xupwz hoặc tab Stack Farming _0xvqxa)
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x42\x6f\x6e\x65", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x42\x6f\x6e\x65"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x45\x63\x74\x6f\x70\x6c\x61\x73\x6d", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x45\x63\x74\x6f\x70\x6c\x61\x73\x6d"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x4d\x61\x67\x6d\x61\x20\x4f\x72\x65", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x4d\x61\x67\x6d\x61\x4f\x72\x65"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x53\x63\x72\x61\x70\x20\x4d\x65\x74\x61\x6c", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x53\x63\x72\x61\x70\x4d\x65\x74\x61\x6c"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x4c\x65\x61\x74\x68\x65\x72", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x4c\x65\x61\x74\x68\x65\x72"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x41\x6e\x67\x65\x6c\x20\x57\x69\x6e\x67\x73", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x41\x6e\x67\x65\x6c\x57\x69\x6e\x67\x73"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x46\x69\x73\x68\x20\x54\x61\x69\x6c", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x46\x69\x73\x68\x54\x61\x69\x6c"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x47\x75\x6e\x70\x6f\x77\x64\x65\x72", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x47\x75\x6e\x70\x6f\x77\x64\x65\x72"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x4d\x79\x73\x74\x69\x63\x20\x44\x72\x6f\x70\x6c\x65\x74", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x4d\x79\x73\x74\x69\x63\x44\x72\x6f\x70\x6c\x65\x74"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x43\x6f\x6e\x6a\x75\x72\x65\x64\x20\x43\x6f\x63\x6f\x61", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x43\x6f\x6e\x6a\x75\x72\x65\x64\x43\x6f\x63\x6f\x61"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x44\x72\x61\x67\x6f\x6e\x20\x53\x63\x61\x6c\x65\x73", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x44\x72\x61\x67\x6f\x6e\x53\x63\x61\x6c\x65\x73"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x52\x61\x64\x69\x6f\x61\x63\x74\x69\x76\x65\x20\x4d\x61\x74", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x52\x61\x64\x69\x6f\x61\x63\x74\x69\x76\x65"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x44\x65\x6d\x6f\x6e\x69\x63\x20\x57\x69\x73\x70", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x44\x65\x6d\x6f\x6e\x69\x63\x57\x69\x73\x70"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x4d\x69\x6e\x69\x20\x54\x75\x73\x6b", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x4d\x69\x6e\x69\x54\x75\x73\x6b"]=a end})
+_0xvqxa:CreateToggle({Name="\x41\x75\x74\x6f\x20\x56\x61\x6d\x70\x69\x72\x65\x20\x46\x61\x6e\x67", CurrentValue=false, Callback=function(a)_0xsuzc["\x41\x75\x74\x6f\x56\x61\x6d\x70\x69\x72\x65\x46\x61\x6e\x67"]=a end})
+
+-- Gọi lại _0xmhor để kích hoạt các loop mới
+_0xmhor()
+-- =============================================
+-- APPEL CAT HUB - AUTO RACE V2 UPGRADE (FULL)
+-- =============================================
+
+-- Dừng loop Auto Race V2 cũ nếu đang chạy
+_0xginq("\x41\x52\x56\x32")
+
+-- Khởi tạo biến trạng thái và cấu hình
+_0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x53\x74\x61\x74\x65"] = 0
+_0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x54\x69\x6d\x65\x72"] = 0
+_0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x48\x61\x73\x51\x75\x65\x73\x74"] = false
+
+-- Hàm kiểm tra thời gian ngày/đêm (true = ban ngày)
+local function _0x_is_daytime()
+    return _0xe4fc.ClockTime >= 6 and _0xe4fc.ClockTime < 18
+end
+
+-- Hàm kiểm tra có vật phẩm trong backpack không
+local function _0x_has_item(name)
+    for _, v in pairs(_0xd9eh.Backpack:GetChildren()) do
+        if v:IsA("\x54\x6f\x6f\x6c") and v.Name:lower():find(name:lower()) then
+            return true
+        end
+    end
+    return _0xeafi and _0xeafi:FindFirstChild(name) ~= nil
+end
+
+-- Hàm tìm và nhặt hoa (dùng cho Blue và Red)
+local function _0x_collect_flower(flowerName)
+    local flower = _0xjlqt("\x4d\x6f\x64\x65\x6c", flowerName) or _0xjlqt("\x42\x61\x73\x65\x50\x61\x72\x74", flowerName)
+    if flower then
+        local pos = flower:IsA("\x4d\x6f\x64\x65\x6c") and flower:GetPivot().Position or flower.Position
+        _0xlnsv(pos)
+        task.wait(0.5)
+        -- Cố gắng nhặt bằng touch interest
+        if flower:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            _0xqsxa(flower, 0)
+            _0xqsxa(flower, 1)
+        else
+            -- Nếu là Model, thử tìm ProximityPrompt
+            local prompt = flower:FindFirstChildWhichIsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74")
+            if prompt then fireproximityprompt(prompt) end
+        end
+        return true
+    end
+    return false
+end
+
+-- Main loop Auto Race V2
+_0x_fhmp("\x41\x52\x56\x32", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] then return end
+
+    local state = _0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x53\x74\x61\x74\x65"]
+    local raceData = _0xd9eh.Data and _0xd9eh.Data.Race
+    local currentRace = raceData and raceData.Value or "\x48\x75\x6d\x61\x6e"
+
+    -- State 0: Kiểm tra điều kiện
+    if state == 0 then
+        -- Kiểm tra đã V2 chưa? (Nếu Race đã là V2 thì dừng)
+        if raceData and raceData.IsV2 and raceData.IsV2.Value == true then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x41\x6c\x72\x65\x61\x64\x79\x20\x56\x32\x21", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+            return
+        end
+        -- Kiểm tra có đủ 500.000 Beli không
+        local beli = _0xd9eh.Data and _0xd9eh.Data.Beli and _0xd9eh.Data.Beli.Value or 0
+        if beli < 500000 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x4e\x6f\x74\x20\x65\x6e\x6f\x75\x67\x68\x20\x42\x65\x6c\x69\x20\x28\x6e\x65\x65\x64\x20\x35\x30\x30\x6b\x29", 3)
+            -- Bật Auto Farm để kiếm tiền? Có thể bật tạm
+            _0x_start_autofarm()
+            return
+        end
+        -- Kiểm tra đang ở Sea 2? (Level >= 700 và < 1500? Hoặc dùng Data.Sea)
+        local sea = _0xd9eh.Data and _0xd9eh.Data.Sea and _0xd9eh.Data.Sea.Value
+        if sea ~= 2 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x59\x6f\x75\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x20\x53\x65\x63\x6f\x6e\x64\x20\x53\x65\x61\x21", 3)
+            -- Nếu có thể teleport về Sea 2 (Middle Town) thì làm
+            _0xlnsv(Vector3.new(-700, 13, -350)) -- Middle Town (Sea 2)
+            return
+        end
+        -- Tất cả điều kiện OK, chuyển sang tìm Alchemist
+        _0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x53\x74\x61\x74\x65"] = 1
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x53\x74\x61\x72\x74\x69\x6e\x67\x20\x71\x75\x65\x73\x74\x2e\x2e\x2e", 2)
+    end
+
+    -- State 1: Tìm Alchemist và nhận quest
+    if state == 1 then
+        local alchemist = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6c\x63\x68\x65\x6d\x69\x73\x74")
+        if alchemist then
+            _0xrtyb(alchemist) -- Nói chuyện
+            _0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x48\x61\x73\x51\x75\x65\x73\x74"] = true
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x51\x75\x65\x73\x74\x20\x61\x63\x63\x65\x70\x74\x65\x64\x21", 2)
+            _0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x53\x74\x61\x74\x65"] = 2
+            task.wait(2)
+        else
+            -- Đến Green Zone
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+            task.wait(1)
+        end
+    end
+
+    -- State 2: Thu thập Blue Flower (ban đêm)
+    if state == 2 then
+        if _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            _0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x53\x74\x61\x74\x65"] = 3
+            return
+        end
+        -- Kiểm tra ban đêm
+        if _0x_is_daytime() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x57\x61\x69\x74\x69\x6e\x67\x20\x66\x6f\x72\x20\x6e\x69\x67\x68\x74\x74\x69\x6d\x65\x20\x28\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72\x29", 2)
+            -- Có thể server hop để nhanh hơn
+            _0x_hopServer()
+            return
+        end
+        -- Tìm Blue Flower ở các vị trí spawn (Green Zone, Graveyard)
+        if not _0x_collect_flower("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            -- Thử các tọa độ cụ thể (ước lượng)
+            local positions = {Vector3.new(-2300, 15, -300), Vector3.new(-1500, 20, 200), Vector3.new(-1800, 22, -800)}
+            for _, pos in ipairs(positions) do
+                _0xlnsv(pos)
+                task.wait(0.5)
+                if _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then break end
+            end
+            -- Nếu vẫn chưa có, server hop
+            _0x_hopServer()
+        end
+    end
+
+    -- State 3: Thu thập Red Flower (ban ngày)
+    if state == 3 then
+        if _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            _0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x53\x74\x61\x74\x65"] = 4
+            return
+        end
+        if not _0x_is_daytime() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x57\x61\x69\x74\x69\x6e\x67\x20\x66\x6f\x72\x20\x64\x61\x79\x74\x69\x6d\x65\x20\x28\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72\x29", 2)
+            _0x_hopServer()
+            return
+        end
+        if not _0x_collect_flower("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            local positions = {Vector3.new(-1000, 20, 500), Vector3.new(-2500, 18, -600), Vector3.new(-3000, 25, 1000)}
+            for _, pos in ipairs(positions) do
+                _0xlnsv(pos)
+                task.wait(0.5)
+                if _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then break end
+            end
+            _0x_hopServer()
+        end
+    end
+
+    -- State 4: Thu thập Yellow Flower (rơi từ NPC)
+    if state == 4 then
+        if _0x_has_item("\x59\x65\x6c\x6c\x6f\x77\x20\x46\x6c\x6f\x77\x65\x72") then
+            _0x_stop_autofarm()
+            _0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x53\x74\x61\x74\x65"] = 5
+            return
+        end
+        -- Bật Auto Farm để giết quái
+        _0x_start_autofarm()
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x46\x61\x72\x6d\x69\x6e\x67\x20\x66\x6f\x72\x20\x59\x65\x6c\x6c\x6f\x77\x20\x46\x6c\x6f\x77\x65\x72\x2e\x2e\x2e", 2)
+    end
+
+    -- State 5: Quay lại Alchemist để hoàn thành
+    if state == 5 then
+        local alchemist = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6c\x63\x68\x65\x6d\x69\x73\x74")
+        if alchemist then
+            _0xrtyb(alchemist)
+            task.wait(1)
+            -- Chọn nâng cấp V2
+            for _, prompt in pairs(alchemist:GetDescendants()) do
+                if prompt:IsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74") and prompt.ActionText:find("\x56\x32") then
+                    fireproximityprompt(prompt)
+                    break
+                end
+            end
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x52\x61\x63\x65\x20\x56\x32\x20\x75\x70\x67\x72\x61\x64\x65\x64\x21", 3)
+            _0x_webhook("\x52\x61\x63\x65\x20\x56\x32\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x20\x62\x79\x20" .. _0xd9eh.Name)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500)) -- Green Zone
+        end
+    end
+end)
+
+-- Thêm UI toggle nếu chưa có (đảm bảo tồn tại trong tab Race & Trials)
+_0xxszc:CreateToggle({
+    Name = "\x41\x75\x74\x6f\x20\x52\x61\x63\x65\x20\x56\x32\x20\x28\x46\x75\x6c\x6c\x29",
+    CurrentValue = false,
+    Callback = function(a)
+        _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = a
+        if a then
+            _0xsuzc["\x52\x61\x63\x65\x56\x32\x5f\x53\x74\x61\x74\x65"] = 0 -- Reset state
+        end
+    end
+})
+-- =============================================
+-- APPEL CAT HUB - AUTO RACE V2 (FULL STATE MACHINE)
+-- =============================================
+
+-- Dừng loop cũ nếu có
+_0xginq("\x41\x52\x56\x32")
+
+-- Khởi tạo biến trạng thái
+_0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 0
+_0xsuzc["\x52\x56\x32\x5f\x54\x69\x6d\x65\x72"] = 0
+
+-- Hàm kiểm tra thời gian ngày/đêm
+local function _0x_is_daytime()
+    return _0xe4fc.ClockTime >= 6 and _0xe4fc.ClockTime < 18
+end
+
+-- Hàm kiểm tra có vật phẩm trong backpack
+local function _0x_has_item(name)
+    for _, v in pairs(_0xd9eh.Backpack:GetChildren()) do
+        if v:IsA("\x54\x6f\x6f\x6c") and v.Name:lower():find(name:lower()) then
+            return true
+        end
+    end
+    return _0xeafi and _0xeafi:FindFirstChild(name) ~= nil
+end
+
+-- Hàm nhặt hoa (dùng cho Blue/Red)
+local function _0x_collect_flower(flowerName)
+    local flower = _0xjlqt("\x4d\x6f\x64\x65\x6c", flowerName)
+    if flower then
+        local pos = flower:GetPivot().Position
+        _0xlnsv(pos)
+        task.wait(0.5)
+        local prompt = flower:FindFirstChildWhichIsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74")
+        if prompt then fireproximityprompt(prompt) end
+        return true
+    end
+    return false
+end
+
+-- Hàm Server Hop
+local function _0x_hop()
+    pcall(function()
+        local d = _0xb1c9:JSONDecode(game:HttpGet("\x68\x74\x74\x70\x73\x3a\x2f\x2f\x67\x61\x6d\x65\x73\x2e\x72\x6f\x62\x6c\x6f\x78\x2e\x63\x6f\x6d\x2f\x76\x31\x2f\x67\x61\x6d\x65\x73\x2f".._0x4a2b.PlaceId.."\x2f\x73\x65\x72\x76\x65\x72\x73\x2f\x50\x75\x62\x6c\x69\x63\x3f\x6c\x69\x6d\x69\x74\x3d\x31\x30"))
+        for _, v in ipairs(d.data) do if v.playing < v.maxPlayers then _0xa0b8:TeleportToPlaceInstance(_0x4a2b.PlaceId, v.id, _0xd9eh) return end end
+    end)
+end
+
+-- Main Auto Race V2 Loop
+_0x_fhmp("\x41\x52\x56\x32", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] then return end
+
+    local state = _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"]
+    local raceData = _0xd9eh.Data and _0xd9eh.Data.Race
+    local currentRace = raceData and raceData.Value or "\x48\x75\x6d\x61\x6e"
+
+    -- State 0: Kiểm tra điều kiện
+    if state == 0 then
+        -- Đã là V2 chưa?
+        if raceData and raceData.IsV2 and raceData.IsV2.Value == true then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x41\x6c\x72\x65\x61\x64\x79\x20\x56\x32\x21", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+            return
+        end
+        -- Kiểm tra Beli
+        local beli = _0xd9eh.Data and _0xd9eh.Data.Beli and _0xd9eh.Data.Beli.Value or 0
+        if beli < 500000 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x4e\x6f\x74\x20\x65\x6e\x6f\x75\x67\x68\x20\x42\x65\x6c\x69\x20\x28\x35\x30\x30\x6b\x29", 3)
+            _0x_start_autofarm()
+            return
+        end
+        -- Kiểm tra Sea
+        local sea = _0xd9eh.Data and _0xd9eh.Data.Sea and _0xd9eh.Data.Sea.Value
+        if sea ~= 2 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x59\x6f\x75\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x20\x53\x65\x63\x6f\x6e\x64\x20\x53\x65\x61\x21", 3)
+            _0xlnsv(Vector3.new(-700, 13, -350)) -- Middle Town (Sea 2)
+            return
+        end
+        _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 1
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x53\x74\x61\x72\x74\x69\x6e\x67\x20\x71\x75\x65\x73\x74", 2)
+    end
+
+    -- State 1: Tìm Alchemist và nhận quest
+    if state == 1 then
+        local alchemist = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6c\x63\x68\x65\x6d\x69\x73\x74")
+        if alchemist then
+            _0xrtyb(alchemist)
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 2
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x51\x75\x65\x73\x74\x20\x61\x63\x63\x65\x70\x74\x65\x64\x21", 2)
+            task.wait(2)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500)) -- Green Zone
+        end
+    end
+
+    -- State 2: Blue Flower (ban đêm)
+    if state == 2 then
+        if _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 3
+            return
+        end
+        if _0x_is_daytime() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x57\x61\x69\x74\x69\x6e\x67\x20\x66\x6f\x72\x20\x6e\x69\x67\x68\x74\x20\x28\x42\x6c\x75\x65\x29", 2)
+            _0x_hop()
+            return
+        end
+        if not _0x_collect_flower("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            -- Duyệt các tọa độ spawn thường gặp
+            local positions = {Vector3.new(-2300,15,-300), Vector3.new(-1500,20,200), Vector3.new(-1800,22,-800)}
+            for _, pos in ipairs(positions) do
+                _0xlnsv(pos); task.wait(0.5)
+                if _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then break end
+            end
+            _0x_hop()
+        end
+    end
+
+    -- State 3: Red Flower (ban ngày)
+    if state == 3 then
+        if _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 4
+            return
+        end
+        if not _0x_is_daytime() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x57\x61\x69\x74\x69\x6e\x67\x20\x66\x6f\x72\x20\x64\x61\x79\x20\x28\x52\x65\x64\x29", 2)
+            _0x_hop()
+            return
+        end
+        if not _0x_collect_flower("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            local positions = {Vector3.new(-1000,20,500), Vector3.new(-2500,18,-600), Vector3.new(-3000,25,1000)}
+            for _, pos in ipairs(positions) do
+                _0xlnsv(pos); task.wait(0.5)
+                if _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then break end
+            end
+            _0x_hop()
+        end
+    end
+
+    -- State 4: Yellow Flower (rơi từ quái)
+    if state == 4 then
+        if _0x_has_item("\x59\x65\x6c\x6c\x6f\x77\x20\x46\x6c\x6f\x77\x65\x72") then
+            _0x_stop_autofarm()
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 5
+            return
+        end
+        _0x_start_autofarm()
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x46\x61\x72\x6d\x69\x6e\x67\x20\x66\x6f\x72\x20\x59\x65\x6c\x6c\x6f\x77\x20\x46\x6c\x6f\x77\x65\x72", 2)
+    end
+
+    -- State 5: Quay lại Alchemist và hoàn thành
+    if state == 5 then
+        local alchemist = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6c\x63\x68\x65\x6d\x69\x73\x74")
+        if alchemist then
+            _0xrtyb(alchemist)
+            task.wait(1)
+            for _, prompt in pairs(alchemist:GetDescendants()) do
+                if prompt:IsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74") and prompt.ActionText:find("\x56\x32") then
+                    fireproximityprompt(prompt)
+                    break
+                end
+            end
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x52\x61\x63\x65\x20\x56\x32\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x21", 3)
+            _0x_webhook("\x52\x61\x63\x65\x20\x56\x32\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x20\x62\x79\x20" .. _0xd9eh.Name)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+        end
+    end
+end)
+
+-- Kích hoạt lại loop (nếu _0xmhor() được gọi sau sẽ đăng ký lại, nhưng ta có thể gọi luôn)
+_0xmhor()
+-- =============================================
+-- APPEL CAT HUB - AUTO RACE V2 (FULL UPGRADE)
+-- =============================================
+
+-- Dừng loop cũ nếu đang chạy
+_0xginq("\x41\x52\x56\x32")
+
+-- Khởi tạo trạng thái và tiến trình
+_0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 0
+_0xsuzc["\x52\x56\x32\x5f\x46\x6c\x6f\x77\x65\x72\x73"] = {
+    Blue = false,
+    Red = false,
+    Yellow = false
+}
+-- Cố gắng khôi phục tiến trình từ file
+pcall(function()
+    local data = readfile("\x52\x61\x63\x65\x56\x32\x50\x72\x6f\x67\x72\x65\x73\x73.json")
+    if data then
+        local saved = _0xb1c9:JSONDecode(data)
+        _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = saved.state or 0
+        _0xsuzc["\x52\x56\x32\x5f\x46\x6c\x6f\x77\x65\x72\x73"] = saved.flowers or {Blue=false, Red=false, Yellow=false}
+    end
+end)
+
+-- Hàm lưu tiến trình
+local function _0x_save_rv2_progress()
+    pcall(function()
+        local data = {
+            state = _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"],
+            flowers = _0xsuzc["\x52\x56\x32\x5f\x46\x6c\x6f\x77\x65\x72\x73"]
+        }
+        writefile("\x52\x61\x63\x65\x56\x32\x50\x72\x6f\x67\x72\x65\x73\x73.json", _0xb1c9:JSONEncode(data))
+    end)
+end
+
+-- Hàm kiểm tra vật phẩm (nếu chưa có)
+local function _0x_has_item(name)
+    for _, v in pairs(_0xd9eh.Backpack:GetChildren()) do
+        if v:IsA("\x54\x6f\x6f\x6c") and v.Name:lower():find(name:lower()) then
+            return true
+        end
+    end
+    return _0xeafi and _0xeafi:FindFirstChild(name) ~= nil
+end
+
+-- Hàm kiểm tra ban ngày
+local function _0x_is_daytime()
+    return _0xe4fc.ClockTime >= 6 and _0xe4fc.ClockTime < 18
+end
+
+-- Hàm nhặt hoa (tìm và tương tác)
+local function _0x_collect_flower(flowerName)
+    local flower = _0xjlqt("\x4d\x6f\x64\x65\x6c", flowerName)
+    if flower then
+        local pos = flower:GetPivot().Position
+        _0xlnsv(pos)
+        task.wait(0.5)
+        local prompt = flower:FindFirstChildWhichIsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74")
+        if prompt then fireproximityprompt(prompt) end
+        return true
+    end
+    return false
+end
+
+-- Hàm Server Hop
+local function _0x_hop()
+    pcall(function()
+        local d = _0xb1c9:JSONDecode(game:HttpGet("\x68\x74\x74\x70\x73\x3a\x2f\x2f\x67\x61\x6d\x65\x73\x2e\x72\x6f\x62\x6c\x6f\x78\x2e\x63\x6f\x6d\x2f\x76\x31\x2f\x67\x61\x6d\x65\x73\x2f".._0x4a2b.PlaceId.."\x2f\x73\x65\x72\x76\x65\x72\x73\x2f\x50\x75\x62\x6c\x69\x63\x3f\x6c\x69\x6d\x69\x74\x3d\x31\x30"))
+        for _, v in ipairs(d.data) do if v.playing < v.maxPlayers then _0xa0b8:TeleportToPlaceInstance(_0x4a2b.PlaceId, v.id, _0xd9eh) return end end
+    end)
+end
+
+-- Vị trí spawn hoa (cập nhật thêm)
+local blueFlowerPositions = {
+    Vector3.new(-2300, 15, -300),
+    Vector3.new(-1500, 20, 200),
+    Vector3.new(-1800, 22, -800),
+    Vector3.new(-2100, 18, -500),
+    Vector3.new(-1600, 21, 100)
+}
+local redFlowerPositions = {
+    Vector3.new(-1000, 20, 500),
+    Vector3.new(-2500, 18, -600),
+    Vector3.new(-3000, 25, 1000),
+    Vector3.new(-1700, 19, -200),
+    Vector3.new(-2200, 17, 400)
+}
+
+-- Auto Race V2 Main Loop (cải tiến)
+_0x_fhmp("\x41\x52\x56\x32", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] then return end
+
+    local state = _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"]
+    local flowers = _0xsuzc["\x52\x56\x32\x5f\x46\x6c\x6f\x77\x65\x72\x73"]
+    local raceData = _0xd9eh.Data and _0xd9eh.Data.Race
+    local currentRace = raceData and raceData.Value or "\x48\x75\x6d\x61\x6e"
+
+    -- State 0: Kiểm tra điều kiện
+    if state == 0 then
+        -- Đã là V2?
+        if raceData and raceData.IsV2 and raceData.IsV2.Value == true then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x41\x6c\x72\x65\x61\x64\x79\x20\x56\x32\x21", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+            pcall(function() delfile("\x52\x61\x63\x65\x56\x32\x50\x72\x6f\x67\x72\x65\x73\x73.json") end)
+            return
+        end
+        -- Beli
+        local beli = _0xd9eh.Data and _0xd9eh.Data.Beli and _0xd9eh.Data.Beli.Value or 0
+        if beli < 500000 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x4e\x65\x65\x64\x20\x35\x30\x30\x6b\x20\x42\x65\x6c\x69", 3)
+            _0x_start_autofarm()
+            return
+        end
+        -- Sea 2
+        local sea = _0xd9eh.Data and _0xd9eh.Data.Sea and _0xd9eh.Data.Sea.Value
+        if sea ~= 2 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x47\x6f\x20\x74\x6f\x20\x53\x65\x63\x6f\x6e\x64\x20\x53\x65\x61", 3)
+            _0xlnsv(Vector3.new(-700, 13, -350)) -- Middle Town
+            return
+        end
+        -- Nếu đã có đủ hoa từ lần trước, nhảy thẳng đến bước tương ứng
+        if flowers.Blue and flowers.Red and flowers.Yellow then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 5
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x52\x65\x73\x75\x6d\x69\x6e\x67\x20\x66\x72\x6f\x6d\x20\x70\x72\x6f\x67\x72\x65\x73\x73", 2)
+            return
+        elseif flowers.Blue and flowers.Red then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 4
+            return
+        elseif flowers.Blue then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 3
+            return
+        else
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 1
+        end
+        _0x_save_rv2_progress()
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x53\x74\x61\x72\x74\x69\x6e\x67\x20\x71\x75\x65\x73\x74", 2)
+    end
+
+    -- State 1: Tìm Alchemist
+    if state == 1 then
+        local alchemist = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6c\x63\x68\x65\x6d\x69\x73\x74")
+        if alchemist then
+            _0xrtyb(alchemist)
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 2
+            _0x_save_rv2_progress()
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x51\x75\x65\x73\x74\x20\x72\x65\x63\x65\x69\x76\x65\x64", 2)
+            task.wait(2)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+        end
+    end
+
+    -- State 2: Blue Flower
+    if state == 2 then
+        if _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            flowers.Blue = true
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 3
+            _0x_save_rv2_progress()
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72\x20\x63\x6f\x6c\x6c\x65\x63\x74\x65\x64", 2)
+            return
+        end
+        if _0x_is_daytime() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x57\x61\x69\x74\x69\x6e\x67\x20\x66\x6f\x72\x20\x6e\x69\x67\x68\x74\x20\x28\x42\x6c\x75\x65\x29", 2)
+            -- Có thể chờ hoặc hop; ta sẽ hop để nhanh hơn
+            _0x_hop()
+            return
+        end
+        -- Thử nhặt trực tiếp
+        if _0x_collect_flower("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            -- đã nhặt trong hàm, nhưng chưa cập nhật flower, ta kiểm tra lại
+        else
+            -- Duyệt các vị trí
+            for _, pos in ipairs(blueFlowerPositions) do
+                _0xlnsv(pos)
+                task.wait(0.3)
+                if _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then break end
+            end
+        end
+        -- Nếu vẫn không có sau khi duyệt, hop
+        if not _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            _0x_hop()
+        end
+    end
+
+    -- State 3: Red Flower
+    if state == 3 then
+        if _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            flowers.Red = true
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 4
+            _0x_save_rv2_progress()
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72\x20\x63\x6f\x6c\x6c\x65\x63\x74\x65\x64", 2)
+            return
+        end
+        if not _0x_is_daytime() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x57\x61\x69\x74\x69\x6e\x67\x20\x66\x6f\x72\x20\x64\x61\x79\x20\x28\x52\x65\x64\x29", 2)
+            _0x_hop()
+            return
+        end
+        if _0x_collect_flower("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+        else
+            for _, pos in ipairs(redFlowerPositions) do
+                _0xlnsv(pos)
+                task.wait(0.3)
+                if _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then break end
+            end
+        end
+        if not _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            _0x_hop()
+        end
+    end
+
+    -- State 4: Yellow Flower (farm NPC ở Green Zone)
+    if state == 4 then
+        if _0x_has_item("\x59\x65\x6c\x6c\x6f\x77\x20\x46\x6c\x6f\x77\x65\x72") then
+            flowers.Yellow = true
+            _0x_stop_autofarm()
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 5
+            _0x_save_rv2_progress()
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x59\x65\x6c\x6c\x6f\x77\x20\x46\x6c\x6f\x77\x65\x72\x20\x63\x6f\x6c\x6c\x65\x63\x74\x65\x64", 2)
+            return
+        end
+        -- Farm NPC trong khu vực Green Zone (bán kính 500 studs)
+        local center = Vector3.new(-1920, 23, -500)
+        _0xlnsv(center)
+        -- Tìm NPC gần nhất
+        local target = nil
+        local minDist = 500
+        for _, v in pairs(_0xd3eb:GetDescendants()) do
+            if v:IsA("\x4d\x6f\x64\x65\x6c") and v:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and v.Humanoid.Health > 0 then
+                local hrp = v:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74")
+                if hrp then
+                    local dist = (hrp.Position - center).Magnitude
+                    if dist < minDist then
+                        minDist = dist
+                        target = v
+                    end
+                end
+            end
+        end
+        if target then
+            local hrp = target:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74")
+            if hrp then
+                _0xlnsv(hrp.Position + Vector3.new(0, 15, 0))
+                _0xoqvy()
+            end
+        else
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x4e\x6f\x20\x4e\x50\x43\x73\x20\x66\x6f\x75\x6e\x64\x2c\x20\x68\x6f\x70\x70\x69\x6e\x67", 2)
+            _0x_hop()
+        end
+    end
+
+    -- State 5: Quay lại Alchemist, hoàn thành
+    if state == 5 then
+        local alchemist = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6c\x63\x68\x65\x6d\x69\x73\x74")
+        if alchemist then
+            _0xrtyb(alchemist)
+            task.wait(1)
+            for _, prompt in pairs(alchemist:GetDescendants()) do
+                if prompt:IsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74") and prompt.ActionText:find("\x56\x32") then
+                    fireproximityprompt(prompt)
+                    break
+                end
+            end
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x52\x61\x63\x65\x20\x56\x32\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x21", 3)
+            _0x_webhook("\x52\x61\x63\x65\x20\x56\x32\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x20\x62\x79\x20" .. _0xd9eh.Name)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+            pcall(function() delfile("\x52\x61\x63\x65\x56\x32\x50\x72\x6f\x67\x72\x65\x73\x73.json") end)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+        end
+    end
+end)
+
+-- Kích hoạt loop
+_0xmhor()
+-- =============================================
+-- APPEL CAT HUB - AUTO RACE V2 EXTENDED
+-- =============================================
+
+-- Cập nhật hàm _0x_collect_flower để tối ưu hơn (tìm trong vùng rộng)
+local function _0x_collect_flower_v2(flowerName)
+    -- Duyệt tất cả đối tượng trong workspace
+    for _, obj in pairs(_0xd3eb:GetDescendants()) do
+        if obj:IsA("\x4d\x6f\x64\x65\x6c") and obj.Name:lower():find(flowerName:lower()) then
+            local hrp = obj:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74") or obj:FindFirstChildWhichIsA("\x42\x61\x73\x65\x50\x61\x72\x74")
+            if hrp then
+                local pos = (hrp:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") and hrp.Position or hrp.Position)
+                -- Nếu khoảng cách < 300 studs, dịch chuyển đến và nhặt
+                if (pos - _0xachk.Position).Magnitude < 300 then
+                    _0xlnsv(pos + Vector3.new(0, 3, 0))
+                    task.wait(0.3)
+                    local prompt = obj:FindFirstChildWhichIsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74")
+                    if prompt then fireproximityprompt(prompt) end
+                    -- Nếu không có prompt, thử chạm vào bất kỳ part nào
+                    if not prompt then
+                        local part = obj:FindFirstChildWhichIsA("\x42\x61\x73\x65\x50\x61\x72\x74")
+                        if part then
+                            _0xqsxa(part, 0)
+                            _0xqsxa(part, 1)
+                        end
+                    end
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
+-- Hàm kiểm tra và xử lý khi chết (hồi sinh và tiếp tục)
+local function _0x_check_death()
+    if _0xfbgj.Health <= 0 then
+        -- Chờ hồi sinh
+        repeat task.wait(1) until _0xfbgj.Health > 0
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x52\x65\x73\x70\x61\x77\x6e\x65\x64\x2c\x20\x63\x6f\x6e\x74\x69\x6e\x75\x69\x6e\x67", 2)
+        -- Sau khi hồi sinh, đợi chút để load rồi tiếp tục
+        task.wait(2)
+    end
+end
+
+-- Hàm tự động trang bị vũ khí mạnh nhất để farm
+local function _0x_equip_best_weapon()
+    local bestDmg = 0
+    local bestTool = nil
+    for _, tool in pairs(_0xd9eh.Backpack:GetChildren()) do
+        if tool:IsA("\x54\x6f\x6f\x6c") and tool:FindFirstChild("\x44\x61\x6d\x61\x67\x65") then
+            local dmg = tool.Damage.Value
+            if dmg > bestDmg then
+                bestDmg = dmg
+                bestTool = tool
+            end
+        end
+    end
+    if bestTool then
+        _0xfbgj:EquipTool(bestTool)
+    end
+end
+
+-- Ghi đè lại hàm Auto Race V2 loop để tích hợp các cải tiến
+_0xginq("\x41\x52\x56\x32")
+
+_0x_fhmp("\x41\x52\x56\x32", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] then return end
+
+    -- Kiểm tra chết
+    _0x_check_death()
+
+    local state = _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"]
+    local flowers = _0xsuzc["\x52\x56\x32\x5f\x46\x6c\x6f\x77\x65\x72\x73"]
+    local raceData = _0xd9eh.Data and _0xd9eh.Data.Race
+    local currentRace = raceData and raceData.Value or "\x48\x75\x6d\x61\x6e"
+
+    -- State 0: Kiểm tra điều kiện (giữ nguyên logic trước, thêm trang bị vũ khí)
+    if state == 0 then
+        _0x_equip_best_weapon()
+        if raceData and raceData.IsV2 and raceData.IsV2.Value == true then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x41\x6c\x72\x65\x61\x64\x79\x20\x56\x32\x21", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+            pcall(function() delfile("\x52\x61\x63\x65\x56\x32\x50\x72\x6f\x67\x72\x65\x73\x73.json") end)
+            return
+        end
+        local beli = _0xd9eh.Data and _0xd9eh.Data.Beli and _0xd9eh.Data.Beli.Value or 0
+        if beli < 500000 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x4e\x65\x65\x64\x20\x35\x30\x30\x6b\x20\x42\x65\x6c\x69", 3)
+            -- Kích hoạt Auto Farm để kiếm tiền, ưu tiên farm ở khu vực có quái rơi nhiều tiền
+            _0xsuzc["\x41\x75\x74\x6f\x46\x61\x72\x6d"] = true
+            return
+        end
+        local sea = _0xd9eh.Data and _0xd9eh.Data.Sea and _0xd9eh.Data.Sea.Value
+        if sea ~= 2 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x47\x6f\x20\x74\x6f\x20\x53\x65\x63\x6f\x6e\x64\x20\x53\x65\x61", 3)
+            _0xlnsv(Vector3.new(-700, 13, -350))
+            return
+        end
+        if flowers.Blue and flowers.Red and flowers.Yellow then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 5
+        elseif flowers.Blue and flowers.Red then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 4
+        elseif flowers.Blue then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 3
+        else
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 1
+        end
+        _0x_save_rv2_progress()
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x53\x74\x61\x72\x74\x69\x6e\x67\x20\x71\x75\x65\x73\x74", 2)
+    end
+
+    -- Các state khác giữ nguyên, nhưng thay _0x_collect_flower bằng _0x_collect_flower_v2
+    -- và thêm _0x_equip_best_weapon() trước khi farm
+    if state == 1 then
+        -- Tìm Alchemist (giữ nguyên)
+        local alchemist = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6c\x63\x68\x65\x6d\x69\x73\x74")
+        if alchemist then
+            _0xrtyb(alchemist)
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 2
+            _0x_save_rv2_progress()
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x51\x75\x65\x73\x74\x20\x72\x65\x63\x65\x69\x76\x65\x64", 2)
+            task.wait(2)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+        end
+    elseif state == 2 then
+        if _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            flowers.Blue = true
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 3
+            _0x_save_rv2_progress()
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72\x20\x63\x6f\x6c\x6c\x65\x63\x74\x65\x64", 2)
+            return
+        end
+        if _0x_is_daytime() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x57\x61\x69\x74\x69\x6e\x67\x20\x6e\x69\x67\x68\x74\x20\x28\x42\x6c\x75\x65\x29", 2)
+            _0x_hop()
+            return
+        end
+        -- Sử dụng _0x_collect_flower_v2
+        if not _0x_collect_flower_v2("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            for _, pos in ipairs(blueFlowerPositions) do
+                _0xlnsv(pos)
+                task.wait(0.3)
+                if _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then break end
+            end
+        end
+        if not _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            _0x_hop()
+        end
+    elseif state == 3 then
+        if _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            flowers.Red = true
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 4
+            _0x_save_rv2_progress()
+            return
+        end
+        if not _0x_is_daytime() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x57\x61\x69\x74\x69\x6e\x67\x20\x64\x61\x79\x20\x28\x52\x65\x64\x29", 2)
+            _0x_hop()
+            return
+        end
+        if not _0x_collect_flower_v2("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            for _, pos in ipairs(redFlowerPositions) do
+                _0xlnsv(pos)
+                task.wait(0.3)
+                if _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then break end
+            end
+        end
+        if not _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            _0x_hop()
+        end
+    elseif state == 4 then
+        if _0x_has_item("\x59\x65\x6c\x6c\x6f\x77\x20\x46\x6c\x6f\x77\x65\x72") then
+            flowers.Yellow = true
+            _0x_stop_autofarm()
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 5
+            _0x_save_rv2_progress()
+            return
+        end
+        _0x_equip_best_weapon()
+        -- Farm NPC ở Green Zone
+        local center = Vector3.new(-1920, 23, -500)
+        if (_0xachk.Position - center).Magnitude > 300 then
+            _0xlnsv(center)
+        end
+        local target = _0xkmru("\x4d\x6f\x64\x65\x6c", {"\x42\x61\x6e\x64\x69\x74","\x50\x69\x72\x61\x74\x65","\x4d\x61\x72\x69\x6e\x65"}, 400)
+        if target and target:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and target.Humanoid.Health > 0 then
+            _0xlnsv(target.HumanoidRootPart.Position + Vector3.new(0,12,0))
+            _0xoqvy()
+        else
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x4e\x6f\x20\x74\x61\x72\x67\x65\x74\x73\x2c\x20\x68\x6f\x70\x70\x69\x6e\x67", 2)
+            _0x_hop()
+        end
+    elseif state == 5 then
+        local alchemist = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6c\x63\x68\x65\x6d\x69\x73\x74")
+        if alchemist then
+            _0xrtyb(alchemist)
+            task.wait(1)
+            for _, prompt in pairs(alchemist:GetDescendants()) do
+                if prompt:IsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74") and prompt.ActionText:find("\x56\x32") then
+                    fireproximityprompt(prompt)
+                    break
+                end
+            end
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x52\x61\x63\x65\x20\x56\x32\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x21", 3)
+            _0x_webhook("\x52\x61\x63\x65\x20\x56\x32\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x20\x62\x79\x20" .. _0xd9eh.Name)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+            pcall(function() delfile("\x52\x61\x63\x65\x56\x32\x50\x72\x6f\x67\x72\x65\x73\x73.json") end)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+        end
+    end
+end)
+
+_0xmhor()
+-- =============================================
+-- APPEL CAT HUB - AUTO RACE V2 (FINAL UPGRADE)
+-- =============================================
+
+-- Dừng loop cũ
+_0xginq("\x41\x52\x56\x32")
+
+-- Khởi tạo lại trạng thái và tiến trình (nếu chưa có)
+_0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 0
+_0xsuzc["\x52\x56\x32\x5f\x46\x6c\x6f\x77\x65\x72\x73"] = {
+    Blue = false,
+    Red = false,
+    Yellow = false
+}
+-- Khôi phục tiến trình
+pcall(function()
+    local data = readfile("\x52\x61\x63\x65\x56\x32\x50\x72\x6f\x67\x72\x65\x73\x73.json")
+    if data then
+        local saved = _0xb1c9:JSONDecode(data)
+        _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = saved.state or 0
+        _0xsuzc["\x52\x56\x32\x5f\x46\x6c\x6f\x77\x65\x72\x73"] = saved.flowers or {Blue=false, Red=false, Yellow=false}
+    end
+end)
+
+-- Lưu tiến trình
+local function _0x_save_rv2_progress()
+    pcall(function()
+        local data = {
+            state = _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"],
+            flowers = _0xsuzc["\x52\x56\x32\x5f\x46\x6c\x6f\x77\x65\x72\x73"]
+        }
+        writefile("\x52\x61\x63\x65\x56\x32\x50\x72\x6f\x67\x72\x65\x73\x73.json", _0xb1c9:JSONEncode(data))
+    end)
+end
+
+-- Hàm kiểm tra ban ngày
+local function _0x_is_daytime()
+    return _0xe4fc.ClockTime >= 6 and _0xe4fc.ClockTime < 18
+end
+
+-- Hàm kiểm tra vật phẩm
+local function _0x_has_item(name)
+    for _, v in pairs(_0xd9eh.Backpack:GetChildren()) do
+        if v:IsA("\x54\x6f\x6f\x6c") and v.Name:lower():find(name:lower()) then return true end
+    end
+    return _0xeafi and _0xeafi:FindFirstChild(name) ~= nil
+end
+
+-- Hàm tìm và nhặt hoa (phiên bản cải tiến - quét toàn bộ workspace)
+local function _0x_collect_flower(flowerName)
+    for _, obj in pairs(_0xd3eb:GetDescendants()) do
+        if obj:IsA("\x4d\x6f\x64\x65\x6c") and obj.Name:lower():find(flowerName:lower()) then
+            local part = obj:FindFirstChildWhichIsA("\x42\x61\x73\x65\x50\x61\x72\x74") or obj:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74")
+            if part then
+                local pos = part.Position
+                if (pos - _0xachk.Position).Magnitude < 500 then
+                    _0xlnsv(pos + Vector3.new(0, 3, 0))
+                    task.wait(0.5)
+                    local prompt = obj:FindFirstChildWhichIsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74")
+                    if prompt then fireproximityprompt(prompt) return true end
+                    -- Nếu không có prompt, thử chạm
+                    if part:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+                        _0xqsxa(part, 0) _0xqsxa(part, 1)
+                    end
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
+-- Hàm Server Hop
+local function _0x_hop()
+    pcall(function()
+        local d = _0xb1c9:JSONDecode(game:HttpGet("\x68\x74\x74\x70\x73\x3a\x2f\x2f\x67\x61\x6d\x65\x73\x2e\x72\x6f\x62\x6c\x6f\x78\x2e\x63\x6f\x6d\x2f\x76\x31\x2f\x67\x61\x6d\x65\x73\x2f".._0x4a2b.PlaceId.."\x2f\x73\x65\x72\x76\x65\x72\x73\x2f\x50\x75\x62\x6c\x69\x63\x3f\x6c\x69\x6d\x69\x74\x3d\x31\x30"))
+        for _, v in ipairs(d.data) do if v.playing < v.maxPlayers then _0xa0b8:TeleportToPlaceInstance(_0x4a2b.PlaceId, v.id, _0xd9eh) return end end
+    end)
+end
+
+-- Hàm phục hồi sau khi chết
+local function _0x_check_death()
+    if _0xfbgj.Health <= 0 then
+        repeat task.wait(1) until _0xfbgj.Health > 0
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x52\x65\x73\x70\x61\x77\x6e\x65\x64\x2c\x20\x63\x6f\x6e\x74\x69\x6e\x75\x69\x6e\x67", 2)
+        task.wait(2)
+    end
+end
+
+-- Hàm tự động trang bị vũ khí mạnh nhất
+local function _0x_equip_best_weapon()
+    local bestDmg = 0
+    local bestTool = nil
+    for _, tool in pairs(_0xd9eh.Backpack:GetChildren()) do
+        if tool:IsA("\x54\x6f\x6f\x6c") and tool:FindFirstChild("\x44\x61\x6d\x61\x67\x65") then
+            local dmg = tool.Damage.Value
+            if dmg > bestDmg then bestDmg = dmg bestTool = tool end
+        end
+    end
+    if bestTool then _0xfbgj:EquipTool(bestTool) end
+end
+
+-- =============================================
+-- MAIN AUTO RACE V2 LOOP (FINAL)
+-- =============================================
+_0x_fhmp("\x41\x52\x56\x32", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] then return end
+
+    _0x_check_death()
+
+    local state = _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"]
+    local flowers = _0xsuzc["\x52\x56\x32\x5f\x46\x6c\x6f\x77\x65\x72\x73"]
+
+    -- State 0: Kiểm tra điều kiện
+    if state == 0 then
+        local raceData = _0xd9eh.Data and _0xd9eh.Data.Race
+        -- Đã là V2 chưa?
+        if raceData and raceData.IsV2 and raceData.IsV2.Value == true then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x41\x6c\x72\x65\x61\x64\x79\x20\x56\x32\x21", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+            pcall(function() delfile("\x52\x61\x63\x65\x56\x32\x50\x72\x6f\x67\x72\x65\x73\x73.json") end)
+            return
+        end
+        -- Beli
+        local beli = _0xd9eh.Data and _0xd9eh.Data.Beli and _0xd9eh.Data.Beli.Value or 0
+        if beli < 500000 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x4e\x65\x65\x64\x20\x35\x30\x30\x6b\x20\x42\x65\x6c\x69\x2e\x20\x41\x75\x74\x6f\x20\x46\x61\x72\x6d\x20\x6f\x6e", 3)
+            _0x_start_autofarm()
+            return
+        end
+        -- Sea 2
+        local sea = _0xd9eh.Data and _0xd9eh.Data.Sea and _0xd9eh.Data.Sea.Value
+        if sea ~= 2 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x47\x6f\x20\x74\x6f\x20\x53\x65\x63\x6f\x6e\x64\x20\x53\x65\x61", 3)
+            _0xlnsv(Vector3.new(-700, 13, -350))
+            return
+        end
+        -- Xác định trạng thái tiếp theo dựa trên hoa đã có
+        if flowers.Blue and flowers.Red and flowers.Yellow then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 5
+        elseif flowers.Blue and flowers.Red then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 4
+        elseif flowers.Blue then
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 3
+        else
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 1
+        end
+        _0x_save_rv2_progress()
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x53\x74\x61\x72\x74\x69\x6e\x67\x20\x71\x75\x65\x73\x74", 2)
+    end
+
+    -- State 1: Tìm Alchemist và nhận quest
+    if state == 1 then
+        local alchemist = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6c\x63\x68\x65\x6d\x69\x73\x74")
+        if alchemist then
+            _0xrtyb(alchemist)
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 2
+            _0x_save_rv2_progress()
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x51\x75\x65\x73\x74\x20\x61\x63\x63\x65\x70\x74\x65\x64", 2)
+            task.wait(2)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+        end
+    end
+
+    -- State 2: Blue Flower (Night)
+    if state == 2 then
+        if _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            flowers.Blue = true
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 3
+            _0x_save_rv2_progress()
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72\x20\x63\x6f\x6c\x6c\x65\x63\x74\x65\x64", 2)
+            return
+        end
+        if _0x_is_daytime() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x57\x61\x69\x74\x69\x6e\x67\x20\x6e\x69\x67\x68\x74\x20\x28\x42\x6c\x75\x65\x29", 2)
+            _0x_hop()
+            return
+        end
+        if not _0x_collect_flower("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then
+            -- Thử các vị trí spawn thông thường
+            local positions = {Vector3.new(-2300,15,-300), Vector3.new(-1500,20,200), Vector3.new(-1800,22,-800)}
+            for _, pos in ipairs(positions) do _0xlnsv(pos) task.wait(0.3) if _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then break end end
+        end
+        if not _0x_has_item("\x42\x6c\x75\x65\x20\x46\x6c\x6f\x77\x65\x72") then _0x_hop() end
+    end
+
+    -- State 3: Red Flower (Day)
+    if state == 3 then
+        if _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            flowers.Red = true
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 4
+            _0x_save_rv2_progress()
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72\x20\x63\x6f\x6c\x6c\x65\x63\x74\x65\x64", 2)
+            return
+        end
+        if not _0x_is_daytime() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x57\x61\x69\x74\x69\x6e\x67\x20\x64\x61\x79\x20\x28\x52\x65\x64\x29", 2)
+            _0x_hop()
+            return
+        end
+        if not _0x_collect_flower("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then
+            local positions = {Vector3.new(-1000,20,500), Vector3.new(-2500,18,-600), Vector3.new(-3000,25,1000)}
+            for _, pos in ipairs(positions) do _0xlnsv(pos) task.wait(0.3) if _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then break end end
+        end
+        if not _0x_has_item("\x52\x65\x64\x20\x46\x6c\x6f\x77\x65\x72") then _0x_hop() end
+    end
+
+    -- State 4: Yellow Flower (Farm NPC)
+    if state == 4 then
+        if _0x_has_item("\x59\x65\x6c\x6c\x6f\x77\x20\x46\x6c\x6f\x77\x65\x72") then
+            flowers.Yellow = true
+            _0x_stop_autofarm()
+            _0xsuzc["\x52\x56\x32\x5f\x53\x74\x61\x74\x65"] = 5
+            _0x_save_rv2_progress()
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x59\x65\x6c\x6c\x6f\x77\x20\x46\x6c\x6f\x77\x65\x72\x20\x63\x6f\x6c\x6c\x65\x63\x74\x65\x64", 2)
+            return
+        end
+        _0x_equip_best_weapon()
+        -- Farm NPC ở Green Zone
+        local center = Vector3.new(-1920, 23, -500)
+        if (_0xachk.Position - center).Magnitude > 300 then _0xlnsv(center) end
+        local target = _0xkmru("\x4d\x6f\x64\x65\x6c", {"\x42\x61\x6e\x64\x69\x74","\x50\x69\x72\x61\x74\x65","\x4d\x61\x72\x69\x6e\x65"}, 500)
+        if target and target:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and target.Humanoid.Health > 0 then
+            local hrp = target:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74")
+            if hrp then _0xlnsv(hrp.Position + Vector3.new(0,15,0)) _0xoqvy() end
+        else
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x4e\x6f\x20\x74\x61\x72\x67\x65\x74\x73\x2c\x20\x68\x6f\x70\x70\x69\x6e\x67", 2)
+            _0x_hop()
+        end
+    end
+
+    -- State 5: Quay lại Alchemist hoàn thành
+    if state == 5 then
+        local alchemist = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x6c\x63\x68\x65\x6d\x69\x73\x74")
+        if alchemist then
+            _0xrtyb(alchemist)
+            task.wait(1)
+            for _, prompt in pairs(alchemist:GetDescendants()) do
+                if prompt:IsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74") and prompt.ActionText:find("\x56\x32") then
+                    fireproximityprompt(prompt)
+                    break
+                end
+            end
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x32", "\x52\x61\x63\x65\x20\x56\x32\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x21", 3)
+            _0x_webhook("\x52\x61\x63\x65\x20\x56\x32\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x20\x62\x79\x20" .. _0xd9eh.Name)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x32"] = false
+            pcall(function() delfile("\x52\x61\x63\x65\x56\x32\x50\x72\x6f\x67\x72\x65\x73\x73.json") end)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+        end
+    end
+end)
+
+-- Kích hoạt lại
+_0xmhor()
