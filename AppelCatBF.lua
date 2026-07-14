@@ -7896,3 +7896,588 @@ end)
 
 -- Kích hoạt lại
 _0xmhor()
+-- =============================================
+-- APPEL CAT HUB - AUTO RACE V3 (FULL STATE MACHINE)
+-- =============================================
+
+-- Dừng loop cũ nếu có
+_0xginq("\x41\x52\x56\x33")
+
+-- Khởi tạo biến trạng thái
+_0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = false
+_0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 0
+_0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = 0
+_0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"] = 0
+
+-- Khôi phục tiến trình nếu có
+pcall(function()
+    local data = readfile("\x52\x61\x63\x65\x56\x33\x50\x72\x6f\x67\x72\x65\x73\x73.json")
+    if data then
+        local saved = _0xb1c9:JSONDecode(data)
+        _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = saved.state or 0
+        _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = saved.substate or 0
+        _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"] = saved.count or 0
+    end
+end)
+
+-- Hàm lưu tiến trình
+local function _0x_save_rv3_progress()
+    pcall(function()
+        local data = {
+            state = _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"],
+            substate = _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"],
+            count = _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"]
+        }
+        writefile("\x52\x61\x63\x65\x56\x33\x50\x72\x6f\x67\x72\x65\x73\x73.json", _0xb1c9:JSONEncode(data))
+    end)
+end
+
+-- Danh sách Physical Fruits (thường gặp)
+local _0x_physical_fruits = {
+    "\x46\x6c\x61\x6d\x65", "\x49\x63\x65", "\x51\x75\x61\x6b\x65", "\x4c\x69\x67\x68\x74",
+    "\x44\x61\x72\x6b", "\x53\x74\x72\x69\x6e\x67", "\x52\x75\x6d\x62\x6c\x65", "\x4d\x61\x67\x6d\x61",
+    "\x42\x75\x64\x64\x68\x61", "\x50\x68\x6f\x65\x6e\x69\x78", "\x44\x72\x61\x67\x6f\x6e",
+    "\x44\x6f\x75\x67\x68", "\x56\x65\x6e\x6f\x6d", "\x53\x70\x69\x72\x69\x74", "\x53\x68\x61\x64\x6f\x77",
+    "\x44\x69\x61\x6d\x6f\x6e\x64", "\x4b\x69\x74\x73\x75\x6e\x65"
+}
+
+-- Hàm kiểm tra có Physical Fruit trong backpack không
+local function _0x_has_physical_fruit()
+    for _, fruitName in ipairs(_0x_physical_fruits) do
+        for _, tool in pairs(_0xd9eh.Backpack:GetChildren()) do
+            if tool:IsA("\x54\x6f\x6f\x6c") and tool.Name:lower():find(fruitName:lower()) then
+                return true, tool
+            end
+        end
+    end
+    return false, nil
+end
+
+-- Hàm tìm người chơi có Race Angel (dựa trên dấu hiệu, tạm thời tìm bất kỳ người chơi nào)
+local function _0x_find_angel_player()
+    for _, p in pairs(_0x5b3c:GetPlayers()) do
+        if p ~= _0xd9eh and p.Character and p.Character:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and p.Character.Humanoid.Health > 0 then
+            -- TODO: kiểm tra Race qua Data (không truy cập được từ client), tạm thời tìm bất kỳ
+            return p
+        end
+    end
+    return nil
+end
+
+-- Hàm tấn công và chờ mục tiêu chết (dùng cho PvP)
+local function _0x_attack_player(targetPlayer)
+    if not targetPlayer or not targetPlayer.Character then return false end
+    local humanoid = targetPlayer.Character:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64")
+    if not humanoid or humanoid.Health <= 0 then return true end -- đã chết
+    local hrp = targetPlayer.Character:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74")
+    if hrp then
+        _0xlnsv(hrp.Position + Vector3.new(0, 10, 0))
+        _0xoqvy()
+    end
+    return false
+end
+
+-- Hàm tìm và đánh boss (dùng cho Human)
+local function _0x_find_and_kill_boss(bossName)
+    local boss = _0xjlqt("\x4d\x6f\x64\x65\x6c", bossName)
+    if boss and boss:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and boss.Humanoid.Health > 0 then
+        local hrp = boss:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74")
+        if hrp then
+            _0xlnsv(hrp.Position + Vector3.new(0, 15, 0))
+            _0xoqvy()
+            return false
+        end
+    end
+    -- Không tìm thấy boss, có thể đã chết
+    return true
+end
+
+-- Hàm tìm và mở chest (Rabbit)
+local function _0x_open_chest()
+    local chest = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x43\x68\x65\x73\x74") or _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x54\x72\x65\x61\x73\x75\x72\x65")
+    if chest then
+        local prompt = chest:FindFirstChildWhichIsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74")
+        if prompt then
+            _0xlnsv(chest:GetPivot().Position + Vector3.new(0, 5, 0))
+            task.wait(0.5)
+            fireproximityprompt(prompt)
+            return true
+        end
+    end
+    return false
+end
+
+-- Hàm tìm Sea Beast tự nhiên (Shark)
+local function _0x_find_natural_sea_beast()
+    -- Tìm bất kỳ Sea Beast nào (khó phân biệt tự nhiên/triệu hồi, tạm chấp nhận)
+    return _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x53\x65\x61\x20\x42\x65\x61\x73\x74")
+end
+
+-- =============================================
+-- MAIN AUTO RACE V3 LOOP
+-- =============================================
+_0x_fhmp("\x41\x52\x56\x33", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] then return end
+
+    -- Kiểm tra chết
+    _0x_check_death()
+
+    local state = _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"]
+    local substate = _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"]
+    local count = _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"]
+    local raceData = _0xd9eh.Data and _0xd9eh.Data.Race
+    local currentRace = raceData and raceData.Value or "\x48\x75\x6d\x61\x6e"
+
+    -- State 0: Kiểm tra điều kiện
+    if state == 0 then
+        -- Đã là V3 chưa?
+        if raceData and raceData.IsV3 and raceData.IsV3.Value == true then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x41\x6c\x72\x65\x61\x64\x79\x20\x56\x33\x21", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = false
+            pcall(function() delfile("\x52\x61\x63\x65\x56\x33\x50\x72\x6f\x67\x72\x65\x73\x73.json") end)
+            return
+        end
+        -- Kiểm tra Race V2
+        if not (raceData and raceData.IsV2 and raceData.IsV2.Value == true) then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x59\x6f\x75\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x56\x32\x20\x66\x69\x72\x73\x74", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = false
+            return
+        end
+        -- Level >= 1000
+        local lvl = _0xd9eh.Data and _0xd9eh.Data.Level and _0xd9eh.Data.Level.Value or 0
+        if lvl < 1000 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4c\x65\x76\x65\x6c\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x31\x30\x30\x30\x2b", 3)
+            _0x_start_autofarm()
+            return
+        end
+        -- Beli >= 2.000.000
+        local beli = _0xd9eh.Data and _0xd9eh.Data.Beli and _0xd9eh.Data.Beli.Value or 0
+        if beli < 2000000 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4e\x65\x65\x64\x20\x32\x2e\x30\x30\x30\x2e\x30\x30\x30\x20\x42\x65\x6c\x69", 3)
+            _0x_start_autofarm()
+            return
+        end
+        -- Đang ở Sea 2 (Arowe ở Green Zone)
+        local sea = _0xd9eh.Data and _0xd9eh.Data.Sea and _0xd9eh.Data.Sea.Value
+        if sea ~= 2 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x47\x6f\x20\x74\x6f\x20\x53\x65\x63\x6f\x6e\x64\x20\x53\x65\x61", 3)
+            _0xlnsv(Vector3.new(-700, 13, -350))
+            return
+        end
+        _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 1
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x53\x74\x61\x72\x74\x69\x6e\x67\x20\x71\x75\x65\x73\x74", 2)
+        _0x_save_rv3_progress()
+    end
+
+    -- State 1: Tìm Arowe và nhận quest
+    if state == 1 then
+        local arowe = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x72\x6f\x77\x65")
+        if arowe then
+            _0xrtyb(arowe)
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x51\x75\x65\x73\x74\x20\x61\x63\x63\x65\x70\x74\x65\x64", 2)
+            _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 2
+            _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = 0
+            _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"] = 0
+            _0x_save_rv3_progress()
+            task.wait(2)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500)) -- Green Zone
+        end
+    end
+
+    -- State 2: Thực hiện nhiệm vụ theo Race
+    if state == 2 then
+        if currentRace == "\x48\x75\x6d\x61\x6e" then
+            -- Human: đánh Diamond, Jeremy, Fajita
+            local bosses = {"\x44\x69\x61\x6d\x6f\x6e\x64", "\x4a\x65\x72\x65\x6d\x79", "\x46\x61\x6a\x69\x74\x61"}
+            if substate < 3 then
+                local bossName = bosses[substate + 1]
+                if _0x_find_and_kill_boss(bossName) then
+                    -- Boss đã chết (hoặc không tìm thấy, coi như đã chết)
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", bossName .. " \x64\x65\x66\x65\x61\x74\x65\x64", 2)
+                    _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = substate + 1
+                    _0x_save_rv3_progress()
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        elseif currentRace == "\x52\x61\x62\x62\x69\x74" or currentRace == "\x4d\x69\x6e\x6b" then
+            -- Rabbit/Mink: mở 30 rương
+            if substate < 30 then
+                if _0x_open_chest() then
+                    local newCount = substate + 1
+                    _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"] = newCount
+                    _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = newCount
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x43\x68\x65\x73\x74\x20" .. newCount .. "/30", 1)
+                    _0x_save_rv3_progress()
+                else
+                    -- Không tìm thấy chest, thử server hop
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4e\x6f\x20\x63\x68\x65\x73\x74\x2c\x20\x68\x6f\x70\x70\x69\x6e\x67", 2)
+                    _0x_hop()
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        elseif currentRace == "\x53\x68\x61\x72\x6b" then
+            -- Shark: đánh 1 Sea Beast tự nhiên
+            if substate == 0 then
+                local beast = _0x_find_natural_sea_beast()
+                if beast and beast:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and beast.Humanoid.Health > 0 then
+                    local hrp = beast:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74")
+                    if hrp then
+                        _0xlnsv(hrp.Position + Vector3.new(0, 15, 0))
+                        _0xoqvy()
+                    end
+                else
+                    -- Sea Beast đã chết hoặc không có
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x53\x65\x61\x20\x42\x65\x61\x73\x74\x20\x64\x65\x66\x65\x61\x74\x65\x64", 2)
+                    _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = 1
+                    _0x_save_rv3_progress()
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        elseif currentRace == "\x41\x6e\x67\x65\x6c" then
+            -- Angel: hạ 1 người chơi Angel (tạm thời bất kỳ)
+            if substate == 0 then
+                local target = _0x_find_angel_player()
+                if target then
+                    if _0x_attack_player(target) then
+                        _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x50\x6c\x61\x79\x65\x72\x20\x64\x65\x66\x65\x61\x74\x65\x64", 2)
+                        _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = 1
+                        _0x_save_rv3_progress()
+                    end
+                else
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4e\x6f\x20\x70\x6c\x61\x79\x65\x72\x20\x66\x6f\x75\x6e\x64\x2c\x20\x68\x6f\x70\x70\x69\x6e\x67", 2)
+                    _0x_hop()
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        elseif currentRace == "\x47\x68\x6f\x75\x6c" then
+            -- Ghoul: hạ 5 người chơi
+            if substate < 5 then
+                local target = _0x_find_angel_player() -- dùng chung hàm tìm player
+                if target then
+                    if _0x_attack_player(target) then
+                        local newCount = substate + 1
+                        _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4b\x69\x6c\x6c\x20" .. newCount .. "/5", 2)
+                        _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = newCount
+                        _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"] = newCount
+                        _0x_save_rv3_progress()
+                    end
+                else
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4e\x6f\x20\x70\x6c\x61\x79\x65\x72\x73\x2c\x20\x68\x6f\x70\x70\x69\x6e\x67", 2)
+                    _0x_hop()
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        elseif currentRace == "\x43\x79\x62\x6f\x72\x67" then
+            -- Cyborg: show Physical Fruit
+            if substate == 0 then
+                local hasFruit, fruitTool = _0x_has_physical_fruit()
+                if hasFruit then
+                    -- Đến Arowe
+                    local arowe = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x72\x6f\x77\x65")
+                    if arowe then
+                        -- Trang bị fruit
+                        if fruitTool then
+                            _0xfbgj:EquipTool(fruitTool)
+                            task.wait(0.5)
+                        end
+                        _0xrtyb(arowe)
+                        _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x53\x68\x6f\x77\x6e\x20\x50\x68\x79\x73\x69\x63\x61\x6c\x20\x46\x72\x75\x69\x74", 2)
+                        _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = 1
+                        _0x_save_rv3_progress()
+                    else
+                        _0xlnsv(Vector3.new(-1920, 23, -500))
+                    end
+                else
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4e\x65\x65\x64\x20\x61\x20\x50\x68\x79\x73\x69\x63\x61\x6c\x20\x46\x72\x75\x69\x74", 3)
+                    _0x_start_autofarm() -- kiếm trái
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        else
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x52\x61\x63\x65\x20\x6e\x6f\x74\x20\x73\x75\x70\x70\x6f\x72\x74\x65\x64", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = false
+        end
+    end
+
+    -- State 3: Quay lại Arowe và nâng cấp V3
+    if state == 3 then
+        local arowe = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x72\x6f\x77\x65")
+        if arowe then
+            _0xrtyb(arowe)
+            task.wait(1)
+            -- Tìm prompt "V3" hoặc "Upgrade"
+            for _, prompt in pairs(arowe:GetDescendants()) do
+                if prompt:IsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74") and prompt.ActionText:find("\x56\x33") then
+                    fireproximityprompt(prompt)
+                    break
+                end
+            end
+            -- Thường sẽ tự động trừ tiền và nâng cấp
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x52\x61\x63\x65\x20\x56\x33\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x21", 3)
+            _0x_webhook("\x52\x61\x63\x65\x20\x56\x33\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x20\x62\x79\x20" .. _0xd9eh.Name)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = false
+            pcall(function() delfile("\x52\x61\x63\x65\x56\x33\x50\x72\x6f\x67\x72\x65\x73\x73.json") end)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+        end
+    end
+end)
+
+-- UI toggle
+_0xxszc:CreateToggle({
+    Name = "\x41\x75\x74\x6f\x20\x52\x61\x63\x65\x20\x56\x33",
+    CurrentValue = false,
+    Callback = function(a)
+        _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = a
+        if a then
+            _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 0
+            _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = 0
+            _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"] = 0
+            _0x_save_rv3_progress()
+        end
+    end
+})
+
+-- Kích hoạt loop
+_0xmhor()
+-- =============================================
+-- APPEL CAT HUB - AUTO RACE V3 (CYBORG FIX & IMPROVE)
+-- =============================================
+
+-- Hàm kiểm tra có bất kỳ trái ác quỷ nào trong backpack (dùng cho Cyborg)
+local function _0x_has_any_fruit()
+    for _, tool in pairs(_0xd9eh.Backpack:GetChildren()) do
+        if tool:IsA("\x54\x6f\x6f\x6c") and tool.Name:lower():find("\x66\x72\x75\x69\x74") then
+            return true, tool
+        end
+    end
+    -- Cũng kiểm tra xem nhân vật đã ăn trái chưa (có kỹ năng trái)
+    if _0xeafi:FindFirstChildWhichIsA("\x54\x6f\x6f\x6c") and _0xeafi:FindFirstChildWhichIsA("\x54\x6f\x6f\x6c").Name:lower():find("\x66\x72\x75\x69\x74") then
+        return true, _0xeafi:FindFirstChildWhichIsA("\x54\x6f\x6f\x6c")
+    end
+    return false, nil
+end
+
+-- Điều chỉnh lại phần Cyborg trong state 2
+-- (Các phần khác giữ nguyên, chỉ sửa đoạn xử lý Cyborg)
+
+-- Ghi đè lại toàn bộ hàm _0x_fhmp("\x41\x52\x56\x33") để đảm bảo logic mới nhất
+_0xginq("\x41\x52\x56\x33")
+
+_0x_fhmp("\x41\x52\x56\x33", function()
+    if not _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] then return end
+    _0x_check_death()
+
+    local state = _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"]
+    local substate = _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"]
+    local count = _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"]
+    local raceData = _0xd9eh.Data and _0xd9eh.Data.Race
+    local currentRace = raceData and raceData.Value or "\x48\x75\x6d\x61\x6e"
+
+    -- State 0: Kiểm tra điều kiện
+    if state == 0 then
+        if raceData and raceData.IsV3 and raceData.IsV3.Value == true then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x41\x6c\x72\x65\x61\x64\x79\x20\x56\x33", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = false
+            pcall(function() delfile("\x52\x61\x63\x65\x56\x33\x50\x72\x6f\x67\x72\x65\x73\x73.json") end)
+            return
+        end
+        if not (raceData and raceData.IsV2 and raceData.IsV2.Value == true) then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4e\x65\x65\x64\x20\x56\x32\x20\x66\x69\x72\x73\x74", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = false
+            return
+        end
+        local lvl = _0xd9eh.Data and _0xd9eh.Data.Level and _0xd9eh.Data.Level.Value or 0
+        if lvl < 1000 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4c\x65\x76\x65\x6c\x20\x3c\x20\x31\x30\x30\x30", 3)
+            _0x_start_autofarm()
+            return
+        end
+        local beli = _0xd9eh.Data and _0xd9eh.Data.Beli and _0xd9eh.Data.Beli.Value or 0
+        if beli < 2000000 then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4e\x65\x65\x64\x20\x32\x4d\x20\x42\x65\x6c\x69", 3)
+            _0x_start_autofarm()
+            return
+        end
+        if not _0x_is_don_swan_room_open() then
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4e\x65\x65\x64\x20\x74\x6f\x20\x64\x65\x66\x65\x61\x74\x20\x44\x6f\x6e\x20\x53\x77\x61\x6e", 3)
+            _0x_kill_boss_by_name("\x44\x6f\x6e\x20\x53\x77\x61\x6e")
+            return
+        end
+        _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 1
+        _0x_save_rv3_progress()
+        _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x53\x74\x61\x72\x74\x69\x6e\x67\x20\x71\x75\x65\x73\x74", 2)
+    end
+
+    -- State 1: Nhận quest Arowe
+    if state == 1 then
+        local arowe = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x72\x6f\x77\x65")
+        if arowe then
+            _0xrtyb(arowe)
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x51\x75\x65\x73\x74\x20\x61\x63\x63\x65\x70\x74\x65\x64", 2)
+            _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 2
+            _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = 0
+            _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"] = 0
+            _0x_save_rv3_progress()
+            task.wait(2)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+        end
+    end
+
+    -- State 2: Thực hiện nhiệm vụ
+    if state == 2 then
+        if currentRace == "\x48\x75\x6d\x61\x6e" then
+            local bosses = {"\x44\x69\x61\x6d\x6f\x6e\x64", "\x4a\x65\x72\x65\x6d\x79", "\x46\x61\x6a\x69\x74\x61"}
+            if substate < 3 then
+                if _0x_kill_boss_by_name(bosses[substate + 1]) then
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", bosses[substate + 1] .. " \x64\x65\x66\x65\x61\x74\x65\x64", 2)
+                    _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = substate + 1
+                    _0x_save_rv3_progress()
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        elseif currentRace == "\x52\x61\x62\x62\x69\x74" or currentRace == "\x4d\x69\x6e\x6b" then
+            if substate < 30 then
+                if _0x_open_chest() then
+                    local newCount = substate + 1
+                    _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"] = newCount
+                    _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = newCount
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x43\x68\x65\x73\x74\x20" .. newCount .. "/30", 1)
+                    _0x_save_rv3_progress()
+                else
+                    _0x_hop()
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        elseif currentRace == "\x53\x68\x61\x72\x6b" then
+            if substate == 0 then
+                local beast = _0x_find_natural_sea_beast()
+                if beast and beast:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64") and beast.Humanoid.Health > 0 then
+                    local hrp = beast:FindFirstChild("\x48\x75\x6d\x61\x6e\x6f\x69\x64\x52\x6f\x6f\x74\x50\x61\x72\x74")
+                    if hrp then _0xlnsv(hrp.Position + Vector3.new(0,15,0)) _0xoqvy() end
+                else
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x53\x65\x61\x20\x42\x65\x61\x73\x74\x20\x64\x65\x66\x65\x61\x74\x65\x64", 2)
+                    _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = 1
+                    _0x_save_rv3_progress()
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        elseif currentRace == "\x41\x6e\x67\x65\x6c" then
+            if substate == 0 then
+                local target = _0x_find_angel_player()
+                if target then
+                    if _0x_pvp_kill_player(target) then
+                        _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x50\x6c\x61\x79\x65\x72\x20\x64\x65\x66\x65\x61\x74\x65\x64", 2)
+                        _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = 1
+                        _0x_save_rv3_progress()
+                    end
+                else
+                    _0x_hop()
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        elseif currentRace == "\x47\x68\x6f\x75\x6c" then
+            if substate < 5 then
+                local target = _0x_find_angel_player()
+                if target then
+                    if _0x_pvp_kill_player(target) then
+                        local newCount = substate + 1
+                        _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4b\x69\x6c\x6c\x20" .. newCount .. "/5", 2)
+                        _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = newCount
+                        _0xsuzc["\x52\x56\x33\x5f\x43\x6f\x75\x6e\x74"] = newCount
+                        _0x_save_rv3_progress()
+                    end
+                else
+                    _0x_hop()
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        elseif currentRace == "\x43\x79\x62\x6f\x72\x67" then
+            -- Cyborg: Chỉ cần show bất kỳ trái ác quỷ nào
+            if substate == 0 then
+                local hasFruit, fruitTool = _0x_has_any_fruit() -- dùng hàm mới
+                if hasFruit then
+                    local arowe = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x72\x6f\x77\x65")
+                    if arowe then
+                        -- Trang bị trái (nếu có)
+                        if fruitTool then
+                            _0xfbgj:EquipTool(fruitTool)
+                            task.wait(0.5)
+                        end
+                        _0xrtyb(arowe)
+                        _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x53\x68\x6f\x77\x6e\x20\x46\x72\x75\x69\x74\x20\x74\x6f\x20\x41\x72\x6f\x77\x65", 2)
+                        _0xsuzc["\x52\x56\x33\x5f\x53\x75\x62\x53\x74\x61\x74\x65"] = 1
+                        _0x_save_rv3_progress()
+                    else
+                        _0xlnsv(Vector3.new(-1920, 23, -500))
+                    end
+                else
+                    _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x4e\x65\x65\x64\x20\x61\x6e\x79\x20\x66\x72\x75\x69\x74\x20\x69\x6e\x20\x62\x61\x63\x6b\x70\x61\x63\x6b", 3)
+                    -- Kiếm trái bằng cách mua hoặc farm
+                    -- Nếu có đủ tiền, thử mua trái random
+                    local dealer = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x42\x6c\x6f\x78\x20\x46\x72\x75\x69\x74\x20\x44\x65\x61\x6c\x65\x72")
+                    if dealer then
+                        _0xrtyb(dealer) -- Mua trái random
+                        task.wait(2)
+                    else
+                        _0x_start_autofarm() -- Farm để tìm trái
+                    end
+                end
+            else
+                _0xsuzc["\x52\x56\x33\x5f\x53\x74\x61\x74\x65"] = 3
+                _0x_save_rv3_progress()
+            end
+        else
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x55\x6e\x73\x75\x70\x70\x6f\x72\x74\x65\x64\x20\x72\x61\x63\x65", 3)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = false
+        end
+    end
+
+    -- State 3: Hoàn thành
+    if state == 3 then
+        local arowe = _0xjlqt("\x4d\x6f\x64\x65\x6c", "\x41\x72\x6f\x77\x65")
+        if arowe then
+            _0xrtyb(arowe)
+            task.wait(1)
+            for _, prompt in pairs(arowe:GetDescendants()) do
+                if prompt:IsA("\x50\x72\x6f\x78\x69\x6d\x69\x74\x79\x50\x72\x6f\x6d\x70\x74") and prompt.ActionText:find("\x56\x33") then
+                    fireproximityprompt(prompt)
+                    break
+                end
+            end
+            _0x_notify("\x52\x61\x63\x65\x20\x56\x33", "\x52\x61\x63\x65\x20\x56\x33\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x21", 3)
+            _0x_webhook("\x52\x61\x63\x65\x20\x56\x33\x20\x75\x6e\x6c\x6f\x63\x6b\x65\x64\x20\x62\x79\x20" .. _0xd9eh.Name)
+            _0xsuzc["\x41\x75\x74\x6f\x52\x61\x63\x65\x56\x33"] = false
+            pcall(function() delfile("\x52\x61\x63\x65\x56\x33\x50\x72\x6f\x67\x72\x65\x73\x73.json") end)
+        else
+            _0xlnsv(Vector3.new(-1920, 23, -500))
+        end
+    end
+end)
+
+-- Kích hoạt
+_0xmhor()
